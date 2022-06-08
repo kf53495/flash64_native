@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'memory64/selection.dart';
+import 'quiz.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class Memory64Selection extends StatelessWidget {
+  const Memory64Selection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Memory64Selection(),
+                    builder: (context) => Memory64Quiz(),
                   ),
                 );
               },

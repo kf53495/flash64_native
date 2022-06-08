@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'memory64/selection.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class Memory64Quiz extends StatelessWidget {
+  const Memory64Quiz({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,19 +20,6 @@ class HomePage extends StatelessWidget {
             height: 50,
             child: Placeholder(
               color: Colors.blueAccent,
-            ),
-          ),
-          Center(
-            child: ElevatedButton(
-              child: const Text('デザイン練習へ'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Memory64Selection(),
-                  ),
-                );
-              },
             ),
           ),
         ],
