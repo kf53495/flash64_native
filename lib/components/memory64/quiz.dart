@@ -38,12 +38,7 @@ class Memory64Quiz extends StatelessWidget {
                                 aspectRatio: 1,
                                 child: FractionallySizedBox(
                                   widthFactor: 0.85,
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.black,
-                                    ),
-                                  ),
+                                  child: StoneColor(),
                                 ),
                               ),
                             ),
@@ -61,6 +56,20 @@ class Memory64Quiz extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class StoneColor extends StatelessWidget {
+  const StoneColor({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.black,
       ),
     );
   }
