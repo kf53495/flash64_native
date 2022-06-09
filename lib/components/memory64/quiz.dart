@@ -27,33 +27,34 @@ class Memory64Quiz extends StatelessWidget {
                 },
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                 children: <TableRow>[
-                  TableRow(
-                    children: <Widget>[
-                      Expanded(
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: FractionallySizedBox(
-                            widthFactor: 0.85,
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.black,
+                  for (int i = 0; i < 4; i++)
+                    TableRow(
+                      children: <Widget>[
+                        Expanded(
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.85,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Container(),
-                      ),
-                      Expanded(
-                        child: Container(),
-                      ),
-                      Expanded(
-                        child: Container(),
-                      ),
-                    ],
-                  ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),
