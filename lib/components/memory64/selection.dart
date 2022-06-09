@@ -27,7 +27,7 @@ class Memory64Selection extends StatelessWidget {
           ),
           Center(
             child: ElevatedButton(
-              child: const Text('デザイン練習へ'),
+              child: const Text('answer quiz'),
               onPressed: () {
                 Navigator.push(
                   context,

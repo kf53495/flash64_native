@@ -10,11 +10,52 @@ class Memory64Quiz extends StatelessWidget {
       appBar: GlobalAppBar(),
       body: Column(
         children: [
-          Container(
-            width: 100,
-            height: 50,
-            child: Placeholder(
-              color: Colors.blueAccent,
+          AspectRatio(
+            aspectRatio: 1,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              width: 23,
+              height: 50,
+              alignment: const Alignment(0, 0),
+              child: Table(
+                border: TableBorder.all(color: Colors.black),
+                columnWidths: <int, TableColumnWidth>{
+                  0: FlexColumnWidth(),
+                  1: FlexColumnWidth(),
+                  2: FlexColumnWidth(),
+                  3: FlexColumnWidth(),
+                },
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: <TableRow>[
+                  TableRow(
+                    children: <Widget>[
+                      Expanded(
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: FractionallySizedBox(
+                            widthFactor: 0.85,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Container(
