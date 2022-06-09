@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../components/home.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'components/home.dart';
+import 'components/global_components/appbar.dart';
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
@@ -13,16 +14,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flash64 native',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('あっぷばーです'),
+        title: 'Flash64 native',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
-        body: HomePage(),
-      ),
-    );
+        home: HomePage());
   }
 }

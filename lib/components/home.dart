@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'global_components/appbar.dart';
 import 'memory64/selection.dart';
 
 class HomePage extends StatelessWidget {
@@ -7,6 +8,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: GlobalAppBar(),
       body: Column(
         children: [
           Container(

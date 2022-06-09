@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../global_components/appbar.dart';
 import 'quiz.dart';
 
 class Memory64Selection extends StatelessWidget {
@@ -7,6 +8,7 @@ class Memory64Selection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: GlobalAppBar(),
       body: Column(
         children: [
           Container(
