@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
+
+class Stones extends StateNotifier<Map> {
+  Stones() : super({});
+}
+
+final stoneProvider = StateNotifierProvider<Stones, Map>((ref) => Stones());
 
 class Memory64Quiz extends StatelessWidget {
   const Memory64Quiz({Key? key}) : super(key: key);
@@ -51,7 +58,7 @@ class Memory64Quiz extends StatelessWidget {
           ),
           Center(
             child: ElevatedButton(
-              child: const Text('デザイン練習へ'),
+              child: const Text('おぼえた！'),
               onPressed: () {},
             ),
           ),
@@ -62,7 +69,8 @@ class Memory64Quiz extends StatelessWidget {
 }
 
 class StoneColor extends StatelessWidget {
-  const StoneColor({Key? key}) : super(key: key);
+  StoneColor({Key? key}) : super(key: key);
+  Map<String, String> stoneStates = {};
 
   @override
   Widget build(BuildContext context) {
