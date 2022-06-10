@@ -2,8 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
 
-class Stones extends StateNotifier<List> {
+class StoneInformation {
+  const StoneInformation(
+      {required this.id, required this.stoneColor, required this.visiblity});
+
+  final String id;
+  final String stoneColor;
+  final bool visiblity;
+
+  StoneInformation copyWith({String? id, String? stoneColor, bool? visiblity}) {
+    return StoneInformation(
+      id: id ?? this.id,
+      stoneColor: stoneColor ?? this.stoneColor,
+      visiblity: visiblity ?? this.visiblity,
+    );
+  }
+}
+
+class Stones extends StateNotifier<List<StoneInformation>> {
   Stones() : super([]);
+
+  void addStone(StoneInformation stoneInformation) {
+    state = [...state, stoneInformation];
+  }
 }
 
 final stoneProvider = StateNotifierProvider<Stones, List>((ref) => Stones());
