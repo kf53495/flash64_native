@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
 
-class Stones extends StateNotifier<Map> {
-  Stones() : super({});
+class Stones extends StateNotifier<List> {
+  Stones() : super([]);
 }
 
-final stoneProvider = StateNotifierProvider<Stones, Map>((ref) => Stones());
+final stoneProvider = StateNotifierProvider<Stones, List>((ref) => Stones());
 
 class Memory64Quiz extends StatelessWidget {
   const Memory64Quiz({Key? key}) : super(key: key);
