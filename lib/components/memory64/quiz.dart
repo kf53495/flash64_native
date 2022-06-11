@@ -19,15 +19,17 @@ class StoneInformation {
   }
 }
 
-class Stones extends StateNotifier<List<StoneInformation>> {
-  Stones() : super([]);
+class StoneNotifier extends StateNotifier<List<StoneInformation>> {
+  StoneNotifier() : super([]);
 
   void addStone(StoneInformation stoneInformation) {
     state = [...state, stoneInformation];
   }
 }
 
-final stoneProvider = StateNotifierProvider<Stones, List>((ref) => Stones());
+final stoneProvider =
+    StateNotifierProvider<StoneNotifier, List<StoneInformation>>(
+        (ref) => StoneNotifier());
 
 class Memory64Quiz extends StatelessWidget {
   const Memory64Quiz({Key? key}) : super(key: key);
@@ -47,7 +49,7 @@ class Memory64Quiz extends StatelessWidget {
               alignment: const Alignment(0, 0),
               child: Table(
                 border: TableBorder.all(color: Colors.black),
-                columnWidths: <int, TableColumnWidth>{
+                columnWidths: const <int, TableColumnWidth>{
                   0: FlexColumnWidth(),
                   1: FlexColumnWidth(),
                   2: FlexColumnWidth(),
@@ -89,12 +91,12 @@ class Memory64Quiz extends StatelessWidget {
   }
 }
 
-class StoneColor extends StatelessWidget {
+class StoneColor extends ConsumerWidget {
   StoneColor({Key? key}) : super(key: key);
-  Map<String, String> stoneStates = {};
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    List<StoneInformation> stonesss = ref.watch(stoneProvider);
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
