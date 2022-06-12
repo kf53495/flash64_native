@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:math';
 import '../global_components/appbar.dart';
 
+@immutable
 class StoneInformation {
   const StoneInformation({
     required this.id,
