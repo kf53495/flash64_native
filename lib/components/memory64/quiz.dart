@@ -23,7 +23,10 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
   StoneNotifier() : super([]);
 
   void addStone(StoneInformation stoneInformation) {
-    state = [...state, stoneInformation];
+    state = [
+      ...state,
+      stoneInformation,
+    ];
   }
 }
 
@@ -60,16 +63,14 @@ class Memory64Quiz extends StatelessWidget {
                   for (int i = 0; i < 4; i++)
                     TableRow(
                       children: <Widget>[
-                        for (int i = 0; i < 4; i++)
+                        for (int ii = 0; ii < 4; ii++)
                           GestureDetector(
                             onTap: () {},
-                            child: Expanded(
-                              child: AspectRatio(
-                                aspectRatio: 1,
-                                child: FractionallySizedBox(
-                                  widthFactor: 0.85,
-                                  child: StoneColor(),
-                                ),
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: FractionallySizedBox(
+                                widthFactor: 0.85,
+                                child: StoneColor(),
                               ),
                             ),
                           ),
@@ -97,6 +98,7 @@ class StoneColor extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<StoneInformation> stonesss = ref.watch(stoneProvider);
+    ref.read(stoneProvider.notifier).addStone(stonesss[0]);
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
