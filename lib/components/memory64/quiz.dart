@@ -5,15 +5,15 @@ import '../global_components/appbar.dart';
 class StoneInformation {
   const StoneInformation({
     required this.id,
-    required this.stoneColor,
+    this.stoneColor = true,
     this.visiblity = false,
   });
 
   final int id;
-  final String stoneColor;
+  final bool stoneColor;
   final bool visiblity;
 
-  StoneInformation copyWith({int? id, String? stoneColor, bool? visiblity}) {
+  StoneInformation copyWith({int? id, bool? stoneColor, bool? visiblity}) {
     return StoneInformation(
       id: id ?? this.id,
       stoneColor: stoneColor ?? this.stoneColor,
@@ -31,7 +31,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
       ...state,
       StoneInformation(
         id: placementId,
-        stoneColor: 'white',
+        stoneColor: true,
       )
     ];
     placementId++;
