@@ -15,6 +15,8 @@ class StoneInformation {
   final bool stoneColor;
   final bool visiblity;
 
+  // 以下、試行錯誤中
+
   // StoneInformation copyWith({int? id, bool? stoneColor, bool? visiblity}) {
   //   return StoneInformation(
   //     id: id ?? this.id,
@@ -22,17 +24,18 @@ class StoneInformation {
   //     visiblity: visiblity ?? this.visiblity,
   //   );
   // }
-  @override
   List aiueo() {
     return [id, stoneColor, visiblity];
   }
+
+  // 試行錯誤、ここまで
 }
 
 class StoneNotifier extends StateNotifier<List<StoneInformation>> {
   StoneNotifier() : super([]);
   int placementId = 1;
 
-  void addStone(StoneInformation stoneInformation) {
+  void addStone(List add) {
     state = [
       ...state,
       StoneInformation(
@@ -114,11 +117,14 @@ class StoneColor extends ConsumerWidget {
     List<StoneInformation> stonesss = ref.watch(stoneProvider);
     ref.watch(stoneProvider.notifier).addStone;
     print(stonesss);
+    print(stoneProvider.notifier);
 
     return Container(
         decoration: BoxDecoration(
       shape: BoxShape.circle,
-      color: (true) ? Colors.black : Colors.white,
+      color: (true)
+          ? Colors.black
+          : Colors.white, // providerまわりの実装が終わり次第取り掛かるため仮置き
     ));
   }
 }
