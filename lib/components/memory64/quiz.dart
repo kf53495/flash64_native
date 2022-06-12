@@ -51,11 +51,11 @@ final stoneProvider =
     StateNotifierProvider<StoneNotifier, List<StoneInformation>>(
         (ref) => StoneNotifier());
 
-class Memory64Quiz extends StatelessWidget {
+class Memory64Quiz extends ConsumerWidget {
   const Memory64Quiz({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: GlobalAppBar(),
       body: Column(
