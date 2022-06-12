@@ -15,12 +15,16 @@ class StoneInformation {
   final bool stoneColor;
   final bool visiblity;
 
-  StoneInformation copyWith({int? id, bool? stoneColor, bool? visiblity}) {
-    return StoneInformation(
-      id: id ?? this.id,
-      stoneColor: stoneColor ?? this.stoneColor,
-      visiblity: visiblity ?? this.visiblity,
-    );
+  // StoneInformation copyWith({int? id, bool? stoneColor, bool? visiblity}) {
+  //   return StoneInformation(
+  //     id: id ?? this.id,
+  //     stoneColor: stoneColor ?? this.stoneColor,
+  //     visiblity: visiblity ?? this.visiblity,
+  //   );
+  // }
+  @override
+  List aiueo() {
+    return [id, stoneColor, visiblity];
   }
 }
 
