@@ -3,14 +3,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
 
 class StoneInformation {
-  const StoneInformation(
-      {required this.id, required this.stoneColor, required this.visiblity});
+  const StoneInformation({
+    required this.id,
+    required this.stoneColor,
+    this.visiblity = false,
+  });
 
-  final String id;
+  final int id;
   final String stoneColor;
   final bool visiblity;
 
-  StoneInformation copyWith({String? id, String? stoneColor, bool? visiblity}) {
+  StoneInformation copyWith({int? id, String? stoneColor, bool? visiblity}) {
     return StoneInformation(
       id: id ?? this.id,
       stoneColor: stoneColor ?? this.stoneColor,
@@ -21,12 +24,17 @@ class StoneInformation {
 
 class StoneNotifier extends StateNotifier<List<StoneInformation>> {
   StoneNotifier() : super([]);
+  int placementId = 1;
 
   void addStone(StoneInformation stoneInformation) {
     state = [
       ...state,
-      stoneInformation,
+      StoneInformation(
+        id: placementId,
+        stoneColor: 'white',
+      )
     ];
+    placementId++;
   }
 }
 
@@ -102,7 +110,7 @@ class StoneColor extends ConsumerWidget {
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.black,
+        color: (0 == 0) ? Colors.black : Colors.white,
       ),
     );
   }
