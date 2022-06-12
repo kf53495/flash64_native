@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'dart:math';
 import '../global_components/appbar.dart';
 
 class StoneInformation {
@@ -31,7 +32,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
       ...state,
       StoneInformation(
         id: placementId,
-        stoneColor: true,
+        stoneColor: Random().nextBool(),
       )
     ];
     placementId++;
@@ -106,12 +107,13 @@ class StoneColor extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<StoneInformation> stonesss = ref.watch(stoneProvider);
-    ref.read(stoneProvider.notifier).addStone(stonesss[0]);
+    ref.watch(stoneProvider.notifier).addStone;
+    print(stonesss);
+
     return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: (0 == 0) ? Colors.black : Colors.white,
-      ),
-    );
+        decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      color: (true) ? Colors.black : Colors.white,
+    ));
   }
 }
