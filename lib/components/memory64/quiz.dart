@@ -7,8 +7,8 @@ import '../global_components/appbar.dart';
 class StoneInformation {
   const StoneInformation({
     required this.id,
-    this.stoneColor = true,
-    this.visiblity = false,
+    required this.stoneColor,
+    required this.visiblity,
   });
 
   final int id;
@@ -17,16 +17,17 @@ class StoneInformation {
 
   // 以下、試行錯誤中
 
-  // StoneInformation copyWith({int? id, bool? stoneColor, bool? visiblity}) {
-  //   return StoneInformation(
-  //     id: id ?? this.id,
-  //     stoneColor: stoneColor ?? this.stoneColor,
-  //     visiblity: visiblity ?? this.visiblity,
-  //   );
-  // }
-  List aiueo() {
-    return [id, stoneColor, visiblity];
+  StoneInformation copyWith({int? id, bool? stoneColor, bool? visiblity}) {
+    return StoneInformation(
+      id: id ?? this.id,
+      stoneColor: stoneColor ?? this.stoneColor,
+      visiblity: visiblity ?? this.visiblity,
+    );
   }
+
+  // List aiueo() {
+  //   return [id, stoneColor, visiblity];
+  // }
 
   // 試行錯誤、ここまで
 }
@@ -41,6 +42,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
       StoneInformation(
         id: placementId,
         stoneColor: Random().nextBool(),
+        visiblity: true,
       )
     ];
     placementId++;
@@ -101,7 +103,7 @@ class Memory64Quiz extends ConsumerWidget {
             child: ElevatedButton(
               child: const Text('おぼえた！'),
               onPressed: () {
-                () => ref.read(stoneProvider.notifier).addStone();
+                ref.read(stoneProvider.notifier).addStone();
               },
             ),
           ),
@@ -116,17 +118,22 @@ class StoneColor extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<StoneInformation> stonesss = ref.watch(stoneProvider);
-    ref.watch(stoneProvider.notifier).addStone;
-    print(stonesss);
-    print(stoneProvider.notifier);
+    final List<StoneInformation> stonesss = ref.watch(stoneProvider);
 
-    return Container(
-        decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      color: (true)
-          ? Colors.black
-          : Colors.white, // providerまわりの実装が終わり次第取り掛かるため仮置き
-    ));
+    if (stonesss.isEmpty) {
+      return Container(
+          decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.blue,
+      ));
+    } else {
+      return Container(
+          decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: (true)
+            ? Colors.black
+            : Colors.white, // providerまわりの実装が終わり次第取り掛かるため仮置き
+      ));
+    }
   }
 }
