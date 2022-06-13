@@ -30,15 +30,17 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
   int placementId = 1;
 
   void addStone() {
-    state = [
-      ...state,
-      StoneInformation(
-        id: placementId,
-        stoneColor: Random().nextBool(),
-        visiblity: true,
-      )
-    ];
-    placementId++;
+    for (int i = 0; i < 16; i++) {
+      state = [
+        ...state,
+        StoneInformation(
+          id: placementId,
+          stoneColor: Random().nextBool(),
+          visiblity: true,
+        )
+      ];
+      placementId++;
+    }
   }
 }
 
@@ -134,9 +136,16 @@ class StoneColor extends HookConsumerWidget {
       return Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: (stonesss[0].stoneColor) ? Colors.black : Colors.white,
+          color: (stonesss[masusitei(verticalBox, horizontalBox)].stoneColor)
+              ? Colors.black
+              : Colors.white,
         ),
       );
     }
+  }
+
+  int masusitei(vertical, horizontal) {
+    int specifiedBox = (vertical) + (vertical * 4);
+    return specifiedBox;
   }
 }
