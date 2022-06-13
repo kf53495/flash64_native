@@ -72,17 +72,22 @@ class Memory64Quiz extends ConsumerWidget {
                 },
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                 children: <TableRow>[
-                  for (int boardColumn = 0; boardColumn < 4; boardColumn++)
+                  for (int verticalBox = 0; verticalBox < 4; verticalBox++)
                     TableRow(
                       children: <Widget>[
-                        for (int boardRow = 0; boardRow < 4; boardRow++)
+                        for (int horizontalBox = 0;
+                            horizontalBox < 4;
+                            horizontalBox++)
                           GestureDetector(
                             onTap: () {},
                             child: AspectRatio(
                               aspectRatio: 1,
                               child: FractionallySizedBox(
                                 widthFactor: 0.85,
-                                child: StoneColor(/*boardColumn, boardRow*/),
+                                child: StoneColor(
+                                  verticalBox: verticalBox,
+                                  horizontalBox: horizontalBox,
+                                ),
                               ),
                             ),
                           ),
@@ -107,12 +112,17 @@ class Memory64Quiz extends ConsumerWidget {
 }
 
 class StoneColor extends HookConsumerWidget {
-  StoneColor({Key? key}) : super(key: key);
+  StoneColor({
+    Key? key,
+    required this.verticalBox,
+    required this.horizontalBox,
+  }) : super(key: key);
+  int verticalBox;
+  int horizontalBox;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<StoneInformation> stonesss = ref.watch(stoneProvider);
-
     if (stonesss.isEmpty) {
       return Container(
         decoration: const BoxDecoration(
