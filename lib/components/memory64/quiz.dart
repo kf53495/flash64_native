@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'dart:math';
 import '../global_components/appbar.dart';
 
@@ -15,8 +16,6 @@ class StoneInformation {
   final bool stoneColor;
   final bool visiblity;
 
-  // 以下、試行錯誤中
-
   StoneInformation copyWith({int? id, bool? stoneColor, bool? visiblity}) {
     return StoneInformation(
       id: id ?? this.id,
@@ -24,12 +23,6 @@ class StoneInformation {
       visiblity: visiblity ?? this.visiblity,
     );
   }
-
-  // List aiueo() {
-  //   return [id, stoneColor, visiblity];
-  // }
-
-  // 試行錯誤、ここまで
 }
 
 class StoneNotifier extends StateNotifier<List<StoneInformation>> {
@@ -79,17 +72,17 @@ class Memory64Quiz extends ConsumerWidget {
                 },
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                 children: <TableRow>[
-                  for (int i = 0; i < 4; i++)
+                  for (int boardColumn = 0; boardColumn < 4; boardColumn++)
                     TableRow(
                       children: <Widget>[
-                        for (int ii = 0; ii < 4; ii++)
+                        for (int boardRow = 0; boardRow < 4; boardRow++)
                           GestureDetector(
                             onTap: () {},
                             child: AspectRatio(
                               aspectRatio: 1,
                               child: FractionallySizedBox(
                                 widthFactor: 0.85,
-                                child: StoneColor(),
+                                child: StoneColor(/*boardColumn, boardRow*/),
                               ),
                             ),
                           ),
@@ -113,7 +106,7 @@ class Memory64Quiz extends ConsumerWidget {
   }
 }
 
-class StoneColor extends ConsumerWidget {
+class StoneColor extends HookConsumerWidget {
   StoneColor({Key? key}) : super(key: key);
 
   @override
@@ -122,18 +115,18 @@ class StoneColor extends ConsumerWidget {
 
     if (stonesss.isEmpty) {
       return Container(
-          decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.blue,
-      ));
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.blue,
+        ),
+      );
     } else {
       return Container(
-          decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: (true)
-            ? Colors.black
-            : Colors.white, // providerまわりの実装が終わり次第取り掛かるため仮置き
-      ));
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: (stonesss[0].stoneColor) ? Colors.black : Colors.white,
+        ),
+      );
     }
   }
 }
