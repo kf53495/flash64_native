@@ -35,7 +35,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
   StoneNotifier() : super([]);
   int placementId = 1;
 
-  void addStone(List add) {
+  void addStone() {
     state = [
       ...state,
       StoneInformation(
@@ -100,7 +100,9 @@ class Memory64Quiz extends ConsumerWidget {
           Center(
             child: ElevatedButton(
               child: const Text('おぼえた！'),
-              onPressed: () {},
+              onPressed: () {
+                () => ref.read(stoneProvider.notifier).addStone();
+              },
             ),
           ),
         ],
