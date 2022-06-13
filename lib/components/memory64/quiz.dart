@@ -138,7 +138,7 @@ class StoneColor extends HookConsumerWidget {
           shape: BoxShape.circle,
           color: (stonesss[masusitei(verticalBox, horizontalBox)].stoneColor)
               ? Colors.black
-              : Colors.white,
+              : Colors.red,
         ),
       );
     }
