@@ -84,11 +84,14 @@ class Memory64Quiz extends ConsumerWidget {
                             onTap: () {},
                             child: AspectRatio(
                               aspectRatio: 1,
-                              child: FractionallySizedBox(
-                                widthFactor: 0.85,
-                                child: StoneColor(
-                                  verticalBox: verticalBox,
-                                  horizontalBox: horizontalBox,
+                              child: Container(
+                                color: Colors.lightGreen,
+                                child: FractionallySizedBox(
+                                  widthFactor: 0.85,
+                                  child: StoneColor(
+                                    verticalBox: verticalBox,
+                                    horizontalBox: horizontalBox,
+                                  ),
                                 ),
                               ),
                             ),
@@ -129,7 +132,7 @@ class StoneColor extends HookConsumerWidget {
       return Container(
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.blue,
+          color: Colors.lightGreen,
         ),
       );
     } else {
@@ -145,7 +148,7 @@ class StoneColor extends HookConsumerWidget {
   }
 
   int masusitei(vertical, horizontal) {
-    int specifiedBox = (vertical) + (vertical * 4);
+    int specifiedBox = (vertical) + (horizontal * 4);
     return specifiedBox;
   }
 }
