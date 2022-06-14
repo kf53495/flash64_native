@@ -6,7 +6,7 @@ import 'providers/stone_provider.dart';
 import 'providers/button_visiblity_provider.dart';
 
 class Memory64Quiz extends ConsumerWidget {
-  Memory64Quiz({
+  const Memory64Quiz({
     Key? key,
   }) : super(key: key);
 
@@ -121,7 +121,7 @@ class StoneColor extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<StoneInformation> stoneColors = ref.watch(stoneProvider);
-    final int boxSize = ref.watch(boardSizeProvider);
+    final int boardSize = ref.watch(boardSizeProvider);
     if (stoneColors.isEmpty) {
       return Container(
         decoration: const BoxDecoration(
@@ -133,18 +133,18 @@ class StoneColor extends ConsumerWidget {
       return Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: (stoneColors[randomColor(verticalBox, horizontalBox, boxSize)]
-                  .stoneColor)
-              ? Colors.black
-              : Colors.white,
+          color:
+              (stoneColors[randomColor(verticalBox, horizontalBox, boardSize)]
+                      .stoneColor)
+                  ? Colors.black
+                  : Colors.white,
         ),
       );
     }
   }
 
-  int randomColor(vertical, horizontal, boxSize) {
-    int specifiedBox =
-        (vertical) + (horizontal * boxSize); //4は盤面サイズなのでのちに変数に置き換える
+  int randomColor(vertical, horizontal, boardSize) {
+    int specifiedBox = (vertical) + (horizontal * boardSize);
     return specifiedBox;
   }
 }
