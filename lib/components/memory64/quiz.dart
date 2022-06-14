@@ -93,8 +93,8 @@ class StoneColor extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<StoneInformation> stonesss = ref.watch(stoneProvider);
-    if (stonesss.isEmpty) {
+    final List<StoneInformation> stoneColors = ref.watch(stoneProvider);
+    if (stoneColors.isEmpty) {
       return Container(
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
@@ -105,7 +105,7 @@ class StoneColor extends ConsumerWidget {
       return Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: (stonesss[masusitei(verticalBox, horizontalBox)].stoneColor)
+          color: (stoneColors[masusitei(verticalBox, horizontalBox)].stoneColor)
               ? Colors.black
               : Colors.red,
         ),
