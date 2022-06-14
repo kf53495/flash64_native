@@ -12,13 +12,10 @@ class Memory64Selection extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            width: 100,
-            height: 50,
-            child: Placeholder(
-              color: Colors.blueAccent,
-            ),
+            width: 200,
+            child: TextField(),
           ),
-          Container(
+          const SizedBox(
             width: 100,
             height: 50,
             child: Placeholder(
@@ -32,7 +29,7 @@ class Memory64Selection extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Memory64Quiz(),
+                    builder: (context) => Memory64Quiz(boardSize: 'ok'),
                   ),
                 );
               },
