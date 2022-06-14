@@ -1,3 +1,4 @@
+import 'package:flash64_native/components/memory64/providers/stone_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
@@ -26,6 +27,7 @@ class Memory64Selection extends ConsumerWidget {
               value: ref.watch(boardSizeProvider),
               onChanged: (int? value) {
                 ref.read(boardSizeProvider.notifier).state = value!;
+                ref.read(stoneProvider.notifier).initStones(value * value);
               },
             ),
           ),

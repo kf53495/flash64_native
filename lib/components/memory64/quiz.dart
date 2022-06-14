@@ -1,3 +1,4 @@
+import 'package:flash64_native/components/memory64/providers/board_size.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
@@ -121,6 +122,7 @@ class StoneColor extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<StoneInformation> stoneColors = ref.watch(stoneProvider);
+    final int boxSize = ref.watch(boardSizeProvider);
     if (stoneColors.isEmpty) {
       return Container(
         decoration: const BoxDecoration(
@@ -132,16 +134,18 @@ class StoneColor extends ConsumerWidget {
       return Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: (stoneColors[masusitei(verticalBox, horizontalBox)].stoneColor)
+          color: (stoneColors[randomColor(verticalBox, horizontalBox, boxSize)]
+                  .stoneColor)
               ? Colors.black
-              : Colors.red,
+              : Colors.white,
         ),
       );
     }
   }
 
-  int masusitei(vertical, horizontal) {
-    int specifiedBox = (vertical) + (horizontal * 4); //4は盤面サイズなのでのちに変数に置き換える
+  int randomColor(vertical, horizontal, boxSize) {
+    int specifiedBox =
+        (vertical) + (horizontal * boxSize); //4は盤面サイズなのでのちに変数に置き換える
     return specifiedBox;
   }
 }
