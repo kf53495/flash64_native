@@ -42,6 +42,17 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
       placementId++;
     }
   }
+
+  void hideStones() {
+    state = [
+      for (final stone in state)
+        StoneInformation(
+          id: stone.id,
+          stoneColor: stone.stoneColor,
+          visiblity: false,
+        )
+    ];
+  }
 }
 
 final stoneProvider =
