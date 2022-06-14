@@ -45,8 +45,7 @@ class Memory64Selection extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        Memory64Quiz(boardSize: ref.read(boardSizeProvider)),
+                    builder: (context) => Memory64Quiz(),
                   ),
                 );
               },

@@ -6,14 +6,13 @@ import 'providers/stone_provider.dart';
 import 'providers/button_visiblity_provider.dart';
 
 class Memory64Quiz extends ConsumerWidget {
-  const Memory64Quiz({
+  Memory64Quiz({
     Key? key,
-    required this.boardSize,
   }) : super(key: key);
-  final int boardSize;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final int boardSize = ref.watch(boardSizeProvider);
     return Scaffold(
       appBar: GlobalAppBar(),
       body: Column(
