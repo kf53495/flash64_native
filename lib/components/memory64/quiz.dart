@@ -81,14 +81,15 @@ class Memory64Quiz extends ConsumerWidget {
   }
 }
 
+@immutable
 class StoneColor extends ConsumerWidget {
-  StoneColor({
+  const StoneColor({
     Key? key,
     required this.verticalBox,
     required this.horizontalBox,
   }) : super(key: key);
-  int verticalBox;
-  int horizontalBox;
+  final int verticalBox;
+  final int horizontalBox;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
