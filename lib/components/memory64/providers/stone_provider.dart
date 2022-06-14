@@ -14,13 +14,15 @@ class StoneInformation {
   final bool stoneColor;
   final bool visiblity;
 
-  StoneInformation copyWith({int? id, bool? stoneColor, bool? visiblity}) {
-    return StoneInformation(
-      id: id ?? this.id,
-      stoneColor: stoneColor ?? this.stoneColor,
-      visiblity: visiblity ?? this.visiblity,
-    );
-  }
+  // 以下の記述、不要(?)
+  // 最後まで実装してエラーが起こらなければそのまま削除
+  // StoneInformation copyWith({int? id, bool? stoneColor, bool? visiblity}) {
+  //   return StoneInformation(
+  //     id: id ?? this.id,
+  //     stoneColor: stoneColor ?? this.stoneColor,
+  //     visiblity: visiblity ?? this.visiblity,
+  //   );
+  // }
 }
 
 class StoneNotifier extends StateNotifier<List<StoneInformation>> {

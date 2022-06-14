@@ -13,13 +13,15 @@ class ButtonStates {
   final bool memorizedButton;
   final bool answerButton;
 
-  ButtonStates copyWith({bool? id, bool? stoneColor, bool? visiblity}) {
-    return ButtonStates(
-      startButton: startButton,
-      memorizedButton: memorizedButton,
-      answerButton: answerButton,
-    );
-  }
+  // 以下の記述、不要(?)
+  // 最後まで実装してエラーが起こらなければそのまま削除
+  // ButtonStates copyWith({bool? id, bool? stoneColor, bool? visiblity}) {
+  //   return ButtonStates(
+  //     startButton: startButton,
+  //     memorizedButton: memorizedButton,
+  //     answerButton: answerButton,
+  //   );
+  // }
 }
 
 class ButtonVisiblityNotifier extends StateNotifier<ButtonStates> {
