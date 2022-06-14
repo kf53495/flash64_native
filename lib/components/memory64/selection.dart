@@ -19,7 +19,7 @@ class Memory64Selection extends ConsumerWidget {
               items: [
                 for (int i = 0; i < 5; i++)
                   DropdownMenuItem(
-                    value: (i + 4) * (i + 4),
+                    value: i + 4,
                     child: Text('${i + 4} × ${i + 4}'),
                   )
               ],
@@ -43,7 +43,8 @@ class Memory64Selection extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Memory64Quiz(boardSize: 16),
+                    builder: (context) =>
+                        Memory64Quiz(boardSize: ref.read(boardSizeProvider)),
                   ),
                 );
               },

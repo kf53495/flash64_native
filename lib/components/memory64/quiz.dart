@@ -9,7 +9,7 @@ class Memory64Quiz extends ConsumerWidget {
     Key? key,
     required this.boardSize,
   }) : super(key: key);
-  final boardSize;
+  final int boardSize;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,11 +34,13 @@ class Memory64Quiz extends ConsumerWidget {
                 },
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                 children: <TableRow>[
-                  for (int verticalBox = 0; verticalBox < 4; verticalBox++)
+                  for (int verticalBox = 0;
+                      verticalBox < boardSize;
+                      verticalBox++)
                     TableRow(
                       children: <Widget>[
                         for (int horizontalBox = 0;
-                            horizontalBox < 4;
+                            horizontalBox < boardSize;
                             horizontalBox++)
                           Visibility(
                             child: GestureDetector(
