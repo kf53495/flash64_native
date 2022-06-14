@@ -13,20 +13,19 @@ class Memory64Selection extends ConsumerWidget {
       appBar: GlobalAppBar(),
       body: Column(
         children: [
-          Container(
+          SizedBox(
             width: 200,
-            child: DropdownButton(
+            child: DropdownButton<int>(
               items: [
-                for (int i = 1; i <= 5; i++)
+                for (int i = 0; i < 5; i++)
                   DropdownMenuItem(
-                    value: i * 4,
+                    value: (i + 4) * (i + 4),
                     child: Text('${i + 4} × ${i + 4}'),
                   )
               ],
+              value: ref.watch(boardSizeProvider),
               onChanged: (int? value) {
-                if (value != null) {
-                  ref.watch(boardSizeProvider.notifier).state = value;
-                }
+                ref.read(boardSizeProvider.notifier).state = value!;
               },
             ),
           ),
