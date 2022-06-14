@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'dart:math';
 import '../global_components/appbar.dart';
 
@@ -126,7 +125,7 @@ class Memory64Quiz extends ConsumerWidget {
   }
 }
 
-class StoneColor extends HookConsumerWidget {
+class StoneColor extends ConsumerWidget {
   StoneColor({
     Key? key,
     required this.verticalBox,
@@ -158,7 +157,7 @@ class StoneColor extends HookConsumerWidget {
   }
 
   int masusitei(vertical, horizontal) {
-    int specifiedBox = (vertical) + (horizontal * 4);
+    int specifiedBox = (vertical) + (horizontal * 4); //4は盤面サイズなのでのちに変数に置き換える
     return specifiedBox;
   }
 }
