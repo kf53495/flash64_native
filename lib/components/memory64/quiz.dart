@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
 import 'providers/stone_provider.dart';
+import 'providers/button_visiblity_provider.dart';
 
 class Memory64Quiz extends ConsumerWidget {
   const Memory64Quiz({Key? key}) : super(key: key);
@@ -59,11 +60,12 @@ class Memory64Quiz extends ConsumerWidget {
           ),
           Center(
             child: Visibility(
-              visible: true,
+              visible: ref.watch(buttonVisiblityProvider).startButton,
               child: ElevatedButton(
                 child: const Text('おぼえた！'),
                 onPressed: () {
                   ref.read(stoneProvider.notifier).addStone();
+                  ref.read(buttonVisiblityProvider.notifier).pushStartButton();
                 },
               ),
             ),
