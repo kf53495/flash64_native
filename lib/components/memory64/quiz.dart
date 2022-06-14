@@ -103,13 +103,23 @@ class Memory64Quiz extends ConsumerWidget {
             ),
           ),
           Center(
-            child: ElevatedButton(
-              child: const Text('おぼえた！'),
-              onPressed: () {
-                ref.read(stoneProvider.notifier).addStone();
-              },
+            child: Visibility(
+              visible: true,
+              child: ElevatedButton(
+                child: const Text('おぼえた！'),
+                onPressed: () {
+                  ref.read(stoneProvider.notifier).addStone();
+                },
+              ),
             ),
           ),
+          const Center(
+            child: SizedBox(
+              width: 100,
+              height: 100,
+              child: Placeholder(),
+            ),
+          )
         ],
       ),
     );
