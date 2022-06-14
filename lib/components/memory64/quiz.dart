@@ -13,6 +13,7 @@ class Memory64Quiz extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final int boardSize = ref.watch(boardSizeProvider);
+    var buttonVisiblities = ref.watch(buttonVisiblityProvider);
     return Scaffold(
       appBar: GlobalAppBar(),
       body: Column(
@@ -68,7 +69,7 @@ class Memory64Quiz extends ConsumerWidget {
           ),
           Center(
             child: Visibility(
-              visible: ref.watch(buttonVisiblityProvider).startButton,
+              visible: buttonVisiblities.startButton,
               child: ElevatedButton(
                 child: const Text('Start'),
                 onPressed: () {
@@ -80,7 +81,7 @@ class Memory64Quiz extends ConsumerWidget {
           ),
           Center(
             child: Visibility(
-              visible: ref.watch(buttonVisiblityProvider).memorizedButton,
+              visible: buttonVisiblities.memorizedButton,
               child: ElevatedButton(
                 child: const Text('おぼえた！'),
                 onPressed: () {
@@ -93,7 +94,7 @@ class Memory64Quiz extends ConsumerWidget {
           ),
           Center(
             child: Visibility(
-              visible: ref.watch(buttonVisiblityProvider).answerButton,
+              visible: buttonVisiblities.answerButton,
               child: ElevatedButton(
                 child: const Text('Answer'),
                 onPressed: () {
