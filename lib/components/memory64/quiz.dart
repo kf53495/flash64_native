@@ -140,13 +140,28 @@ class StoneColor extends ConsumerWidget {
     final int boardSize = ref.watch(boardSizeProvider);
     final int stoneId = _calcStoneId(verticalBox, horizontalBox, boardSize);
     if (stoneColors[stoneId].visiblity) {
-      return Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color:
-              (stoneColors[(stoneId)].stoneColor) ? Colors.black : Colors.white,
-        ),
-      );
+      if (stoneColors[(stoneId)].stoneColor == 'black') {
+        return Container(
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.black,
+          ),
+        );
+      } else if (stoneColors[(stoneId)].stoneColor == 'white') {
+        return Container(
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+          ),
+        );
+      } else {
+        return Container(
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.lightGreen,
+          ),
+        );
+      }
     } else {
       return Container(
         decoration: const BoxDecoration(

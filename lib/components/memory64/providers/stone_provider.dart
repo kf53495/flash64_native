@@ -11,7 +11,7 @@ class StoneInformation {
   });
 
   final int id;
-  final bool stoneColor;
+  final String stoneColor;
   final bool visiblity;
 
   // 以下の記述、不要(?)
@@ -25,6 +25,13 @@ class StoneInformation {
   // }
 }
 
+List<String> stoneIro = [
+  'black',
+  'white',
+  // のちに実装
+  // 'empty',
+];
+
 class StoneNotifier extends StateNotifier<List<StoneInformation>> {
   StoneNotifier() : super([]);
   int placementId = 0;
@@ -36,7 +43,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
         ...state,
         StoneInformation(
           id: placementId,
-          stoneColor: Random().nextBool(),
+          stoneColor: stoneIro[Random().nextInt(2)],
           visiblity: false,
         )
       ];
