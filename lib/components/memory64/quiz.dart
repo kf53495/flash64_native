@@ -13,7 +13,10 @@ class Memory64Quiz extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final int boardSize = ref.watch(boardSizeProvider);
+
     var buttonVisiblities = ref.watch(buttonVisiblityProvider);
+    final readStoneProvider = ref.read(stoneProvider.notifier);
+    final readButtonProvider = ref.read(buttonVisiblityProvider.notifier);
     return Scaffold(
       appBar: GlobalAppBar(),
       body: Column(
@@ -49,13 +52,13 @@ class Memory64Quiz extends ConsumerWidget {
                                 if (ref
                                     .read(buttonVisiblityProvider)
                                     .answerButton) {
-                                  ref.read(stoneProvider.notifier).hidestone(
-                                        _calcStoneId(
-                                          verticalBox,
-                                          horizontalBox,
-                                          boardSize,
-                                        ),
-                                      );
+                                  readStoneProvider.hidestone(
+                                    _calcStoneId(
+                                      verticalBox,
+                                      horizontalBox,
+                                      boardSize,
+                                    ),
+                                  );
                                 }
                               },
                               child: AspectRatio(
@@ -85,8 +88,8 @@ class Memory64Quiz extends ConsumerWidget {
               child: ElevatedButton(
                 child: const Text('Start'),
                 onPressed: () {
-                  ref.read(stoneProvider.notifier).displayAllStones();
-                  ref.read(buttonVisiblityProvider.notifier).pushStartButton();
+                  readStoneProvider.displayAllStones();
+                  readButtonProvider.pushStartButton();
                 },
               ),
             ),
@@ -97,10 +100,8 @@ class Memory64Quiz extends ConsumerWidget {
               child: ElevatedButton(
                 child: const Text('おぼえた！'),
                 onPressed: () {
-                  ref
-                      .read(buttonVisiblityProvider.notifier)
-                      .pushMemorizedButton();
-                  ref.read(stoneProvider.notifier).hideAllStones();
+                  readButtonProvider.pushMemorizedButton();
+                  readStoneProvider.hideAllStones();
                 },
               ),
             ),
@@ -111,7 +112,8 @@ class Memory64Quiz extends ConsumerWidget {
               child: ElevatedButton(
                 child: const Text('Answer'),
                 onPressed: () {
-                  ref.read(buttonVisiblityProvider.notifier).pushAnswerButton();
+                  readButtonProvider.pushAnswerButton();
+                  readStoneProvider.displayAllStones();
                 },
               ),
             ),
