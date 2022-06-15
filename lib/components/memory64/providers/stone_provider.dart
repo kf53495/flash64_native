@@ -38,34 +38,22 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
         StoneInformation(
           id: placementId,
           stoneColor: Random().nextBool(),
-          visiblity: true,
+          visiblity: false,
         )
       ];
       placementId++;
     }
   }
 
-  void addStone() {
-    for (int i = 0; i < 16; i++) {
-      state = [
-        ...state,
-        StoneInformation(
-          id: placementId,
-          stoneColor: Random().nextBool(),
-          visiblity: true,
-        )
-      ];
-      placementId++;
-    }
-  }
+  // void addStone() {}
 
-  void hideStones() {
+  void displayStones() {
     state = [
       for (final stone in state)
         StoneInformation(
           id: stone.id,
           stoneColor: stone.stoneColor,
-          visiblity: false,
+          visiblity: true,
         )
     ];
   }
