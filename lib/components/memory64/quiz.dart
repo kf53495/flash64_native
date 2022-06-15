@@ -89,6 +89,7 @@ class Memory64Quiz extends ConsumerWidget {
                   ref
                       .read(buttonVisiblityProvider.notifier)
                       .pushMemorizedButton();
+                  ref.read(stoneProvider.notifier).hideStones();
                 },
               ),
             ),

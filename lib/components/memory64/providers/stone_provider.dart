@@ -45,8 +45,6 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
     }
   }
 
-  // void addStone() {}
-
   void displayStones() {
     state = [
       for (final stone in state)
@@ -54,6 +52,17 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
           id: stone.id,
           stoneColor: stone.stoneColor,
           visiblity: true,
+        )
+    ];
+  }
+
+  void hideStones() {
+    state = [
+      for (final stone in state)
+        StoneInformation(
+          id: stone.id,
+          stoneColor: stone.stoneColor,
+          visiblity: false,
         )
     ];
   }
