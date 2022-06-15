@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'board_size.dart';
 import 'dart:math';
 
 @immutable
@@ -64,6 +63,20 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
           stoneColor: stone.stoneColor,
           visiblity: false,
         )
+    ];
+  }
+
+  void hidestone(int stoneId) {
+    state = [
+      for (final stone in state)
+        if (stone.id == stoneId)
+          StoneInformation(
+            id: stone.id,
+            stoneColor: stone.stoneColor,
+            visiblity: true,
+          )
+        else
+          stone
     ];
   }
 }

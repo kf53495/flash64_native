@@ -14,7 +14,7 @@ class Memory64Quiz extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final int boardSize = ref.watch(boardSizeProvider);
     var buttonVisiblities = ref.watch(buttonVisiblityProvider);
-    int id = 0;
+
     return Scaffold(
       appBar: GlobalAppBar(),
       body: Column(
@@ -43,10 +43,18 @@ class Memory64Quiz extends ConsumerWidget {
                       children: <Widget>[
                         for (int horizontalBox = 0;
                             horizontalBox < boardSize;
-                            horizontalBox++, id++)
+                            horizontalBox++)
                           Visibility(
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                ref.read(stoneProvider.notifier).hidestone(
+                                      _calcStoneId(
+                                        verticalBox,
+                                        horizontalBox,
+                                        boardSize,
+                                      ),
+                                    );
+                              },
                               child: AspectRatio(
                                 aspectRatio: 1,
                                 child: Container(
@@ -125,7 +133,7 @@ class StoneColor extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final List<StoneInformation> stoneColors = ref.watch(stoneProvider);
     final int boardSize = ref.watch(boardSizeProvider);
-    final int stoneId = calcStoneId(verticalBox, horizontalBox, boardSize);
+    final int stoneId = _calcStoneId(verticalBox, horizontalBox, boardSize);
     if (stoneColors[stoneId].visiblity) {
       return Container(
         decoration: BoxDecoration(
@@ -143,9 +151,9 @@ class StoneColor extends ConsumerWidget {
       );
     }
   }
+}
 
-  int calcStoneId(vertical, horizontal, boardSize) {
-    int specifiedBox = (vertical) + (horizontal * boardSize);
-    return specifiedBox;
-  }
+int _calcStoneId(vertical, horizontal, boardSize) {
+  int specifiedBox = (vertical) + (horizontal * boardSize);
+  return specifiedBox;
 }
