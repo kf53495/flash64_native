@@ -14,7 +14,6 @@ class Memory64Quiz extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final int boardSize = ref.watch(boardSizeProvider);
     var buttonVisiblities = ref.watch(buttonVisiblityProvider);
-
     return Scaffold(
       appBar: GlobalAppBar(),
       body: Column(
@@ -47,13 +46,17 @@ class Memory64Quiz extends ConsumerWidget {
                           Visibility(
                             child: GestureDetector(
                               onTap: () {
-                                ref.read(stoneProvider.notifier).hidestone(
-                                      _calcStoneId(
-                                        verticalBox,
-                                        horizontalBox,
-                                        boardSize,
-                                      ),
-                                    );
+                                if (ref
+                                    .read(buttonVisiblityProvider)
+                                    .answerButton) {
+                                  ref.read(stoneProvider.notifier).hidestone(
+                                        _calcStoneId(
+                                          verticalBox,
+                                          horizontalBox,
+                                          boardSize,
+                                        ),
+                                      );
+                                }
                               },
                               child: AspectRatio(
                                 aspectRatio: 1,
