@@ -82,7 +82,7 @@ class Memory64Quiz extends ConsumerWidget {
               child: ElevatedButton(
                 child: const Text('Start'),
                 onPressed: () {
-                  ref.read(stoneProvider.notifier).displayStones();
+                  ref.read(stoneProvider.notifier).displayAllStones();
                   ref.read(buttonVisiblityProvider.notifier).pushStartButton();
                 },
               ),
@@ -97,7 +97,7 @@ class Memory64Quiz extends ConsumerWidget {
                   ref
                       .read(buttonVisiblityProvider.notifier)
                       .pushMemorizedButton();
-                  ref.read(stoneProvider.notifier).hideStones();
+                  ref.read(stoneProvider.notifier).hideAllStones();
                 },
               ),
             ),
