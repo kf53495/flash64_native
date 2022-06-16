@@ -1,5 +1,6 @@
 import 'package:flash64_native/components/memory64/providers/stone_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
 import 'providers/board_size.dart';
@@ -31,11 +32,12 @@ class Memory64Selection extends ConsumerWidget {
               },
             ),
           ),
-          const SizedBox(
+          SizedBox(
             width: 100,
             height: 50,
-            child: Placeholder(
-              color: Colors.blueAccent,
+            child: TextField(
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             ),
           ),
           Center(
