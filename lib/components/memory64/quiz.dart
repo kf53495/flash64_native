@@ -46,31 +46,29 @@ class Memory64Quiz extends ConsumerWidget {
                         for (int horizontalBox = 0;
                             horizontalBox < boardSize;
                             horizontalBox++)
-                          Visibility(
-                            child: GestureDetector(
-                              onTap: () {
-                                if (ref
-                                    .read(buttonVisiblityProvider)
-                                    .answerButton) {
-                                  readStoneProvider.hidestone(
-                                    _calcStoneId(
-                                      verticalBox,
-                                      horizontalBox,
-                                      boardSize,
-                                    ),
-                                  );
-                                }
-                              },
-                              child: AspectRatio(
-                                aspectRatio: 1,
-                                child: Container(
-                                  color: Colors.lightGreen,
-                                  child: FractionallySizedBox(
-                                    widthFactor: 0.85,
-                                    child: StoneColor(
-                                      verticalBox: verticalBox,
-                                      horizontalBox: horizontalBox,
-                                    ),
+                          GestureDetector(
+                            onTap: () {
+                              if (ref
+                                  .read(buttonVisiblityProvider)
+                                  .answerButton) {
+                                readStoneProvider.hidestone(
+                                  _calcStoneId(
+                                    verticalBox,
+                                    horizontalBox,
+                                    boardSize,
+                                  ),
+                                );
+                              }
+                            },
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: Container(
+                                color: Colors.lightGreen,
+                                child: FractionallySizedBox(
+                                  widthFactor: 0.85,
+                                  child: StoneColor(
+                                    verticalBox: verticalBox,
+                                    horizontalBox: horizontalBox,
                                   ),
                                 ),
                               ),
