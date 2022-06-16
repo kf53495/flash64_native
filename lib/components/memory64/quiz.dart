@@ -1,4 +1,5 @@
 import 'package:flash64_native/components/memory64/providers/board_size.dart';
+import 'package:flash64_native/components/memory64/providers/time_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
@@ -15,6 +16,7 @@ class Memory64Quiz extends ConsumerWidget {
     final int boardSize = ref.watch(boardSizeProvider);
 
     var buttonVisiblities = ref.watch(buttonVisiblityProvider);
+    final time = ref.watch(timeProvider);
     final readStoneProvider = ref.read(stoneProvider.notifier);
     final readButtonProvider = ref.read(buttonVisiblityProvider.notifier);
     return Scaffold(
@@ -88,6 +90,7 @@ class Memory64Quiz extends ConsumerWidget {
                 onPressed: () {
                   readButtonProvider.pushStartButton();
                   readStoneProvider.displayAllStones();
+                  readButtonProvider.startTimer(time);
                 },
               ),
             ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -40,6 +42,21 @@ class ButtonVisiblityNotifier extends StateNotifier<ButtonStates> {
       memorizedButton: true,
       answerButton: false,
     );
+  }
+
+  void startTimer(time) {
+    if (time != 0) {
+      Timer.periodic(
+        Duration(seconds: time),
+        (Timer timer) {
+          state = const ButtonStates(
+            startButton: false,
+            memorizedButton: false,
+            answerButton: true,
+          );
+        },
+      );
+    }
   }
 
   void pushMemorizedButton() {
