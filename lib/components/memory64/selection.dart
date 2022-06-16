@@ -10,6 +10,7 @@ class Memory64Selection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    int boardSize = ref.watch(boardSizeProvider);
     return Scaffold(
       appBar: GlobalAppBar(),
       body: Column(
@@ -27,7 +28,6 @@ class Memory64Selection extends ConsumerWidget {
               value: ref.watch(boardSizeProvider),
               onChanged: (int? value) {
                 ref.read(boardSizeProvider.notifier).state = value!;
-                ref.read(stoneProvider.notifier).initStones(value * value);
               },
             ),
           ),
@@ -42,6 +42,9 @@ class Memory64Selection extends ConsumerWidget {
             child: ElevatedButton(
               child: const Text('answer quiz'),
               onPressed: () {
+                ref
+                    .read(stoneProvider.notifier)
+                    .initStones(boardSize * boardSize);
                 Navigator.push(
                   context,
                   MaterialPageRoute(

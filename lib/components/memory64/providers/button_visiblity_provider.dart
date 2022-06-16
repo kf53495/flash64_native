@@ -60,6 +60,6 @@ class ButtonVisiblityNotifier extends StateNotifier<ButtonStates> {
 }
 
 final buttonVisiblityProvider =
-    StateNotifierProvider<ButtonVisiblityNotifier, ButtonStates>(
+    StateNotifierProvider.autoDispose<ButtonVisiblityNotifier, ButtonStates>(
   (ref) => ButtonVisiblityNotifier(),
 );
