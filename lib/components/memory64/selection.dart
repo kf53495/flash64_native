@@ -1,4 +1,5 @@
 import 'package:flash64_native/components/memory64/providers/stone_provider.dart';
+import 'package:flash64_native/components/memory64/providers/time_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -38,6 +39,9 @@ class Memory64Selection extends ConsumerWidget {
             child: TextField(
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              onChanged: (value) {
+                ref.read(timeProvider.notifier).state = int.parse(value);
+              },
             ),
           ),
           Center(
