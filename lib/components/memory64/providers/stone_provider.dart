@@ -34,9 +34,9 @@ List<String> stoneIro = [
 
 class StoneNotifier extends StateNotifier<List<StoneInformation>> {
   StoneNotifier() : super([]);
-  int placementId = 0;
 
   void initStones(int size) {
+    int placementId = 0;
     state = [];
     for (int i = 0; i < size; i++) {
       state = [

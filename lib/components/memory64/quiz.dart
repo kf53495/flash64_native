@@ -88,8 +88,8 @@ class Memory64Quiz extends ConsumerWidget {
               child: ElevatedButton(
                 child: const Text('Start'),
                 onPressed: () {
-                  readStoneProvider.displayAllStones();
                   readButtonProvider.pushStartButton();
+                  readStoneProvider.displayAllStones();
                 },
               ),
             ),
