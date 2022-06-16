@@ -9,6 +9,10 @@ class Time {
 
 class TimeNotifier extends StateNotifier<int> {
   TimeNotifier() : super(0);
+
+  void setTime(time) {
+    state = int.parse(time);
+  }
 }
 
 final timeProvider = StateNotifierProvider<TimeNotifier, int>(
