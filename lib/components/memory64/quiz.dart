@@ -126,7 +126,9 @@ class Memory64Quiz extends ConsumerWidget {
   }
 
   Future<void> timer(time) async {
-    await Future.delayed(Duration(seconds: time), () => print('ok'));
+    if (time != 0) {
+      await Future.delayed(Duration(seconds: time), () => print('ok'));
+    }
   }
 }
 

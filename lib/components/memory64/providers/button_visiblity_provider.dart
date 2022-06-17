@@ -46,9 +46,9 @@ class ButtonVisiblityNotifier extends StateNotifier<ButtonStates> {
 
   void startTimer(time) {
     if (time != 0) {
-      Timer.periodic(
+      Timer(
         Duration(seconds: time),
-        (Timer timer) {
+        () {
           state = const ButtonStates(
             startButton: false,
             memorizedButton: false,
