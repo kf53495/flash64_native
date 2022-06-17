@@ -16,7 +16,7 @@ class Memory64Quiz extends ConsumerWidget {
     final int boardSize = ref.watch(boardSizeProvider);
 
     var buttonVisiblities = ref.watch(buttonVisiblityProvider);
-    final time = ref.watch(timeProvider);
+    final time = int.parse(ref.watch(timeProvider));
     final readStoneProvider = ref.read(stoneProvider.notifier);
     final readButtonProvider = ref.read(buttonVisiblityProvider.notifier);
     return Scaffold(
