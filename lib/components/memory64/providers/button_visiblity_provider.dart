@@ -26,6 +26,8 @@ class ButtonVisiblityNotifier extends StateNotifier<ButtonStates> {
           ),
         );
 
+  bool detectTimer = false;
+
   void pushStartButton() {
     state = const ButtonStates(
       startButton: false,
@@ -36,14 +38,18 @@ class ButtonVisiblityNotifier extends StateNotifier<ButtonStates> {
 
   void startTimer(time) {
     if (time != 0) {
+      detectTimer = true;
       Timer(
         Duration(seconds: time),
         () {
-          state = const ButtonStates(
-            startButton: false,
-            memorizedButton: false,
-            answerButton: true,
-          );
+          if (detectTimer) {
+            state = const ButtonStates(
+              startButton: false,
+              memorizedButton: false,
+              answerButton: true,
+            );
+            detectTimer = false;
+          }
         },
       );
     }
@@ -55,6 +61,7 @@ class ButtonVisiblityNotifier extends StateNotifier<ButtonStates> {
       memorizedButton: false,
       answerButton: true,
     );
+    detectTimer = false;
   }
 
   void pushAnswerButton() {

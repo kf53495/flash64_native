@@ -65,7 +65,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
     ];
   }
 
-  Future<void> hideAllStonesWithTimer(time) async {
+  void hideAllStonesWithTimer(time) async {
     if (time != 0) {
       detectTimer = true;
       await Future.delayed(
