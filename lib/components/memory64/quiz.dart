@@ -91,7 +91,7 @@ class Memory64Quiz extends ConsumerWidget {
                   readButtonProvider.pushStartButton();
                   readStoneProvider.displayAllStones();
                   readButtonProvider.startTimer(time);
-                  timer(time);
+                  readStoneProvider.hideAllStonesWithTimer(time);
                 },
               ),
             ),
@@ -125,11 +125,12 @@ class Memory64Quiz extends ConsumerWidget {
     );
   }
 
-  Future<void> timer(time) async {
-    if (time != 0) {
-      await Future.delayed(Duration(seconds: time), () => print('ok'));
-    }
-  }
+  // Future<void> timer(time) async {
+  //   if (time != 0) {
+  //     await Future.delayed(
+  //         Duration(seconds: time), () => StoneNotifier().hideAllStones());
+  //   }
+  // }
 }
 
 @immutable

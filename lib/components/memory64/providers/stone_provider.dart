@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:async/async.dart';
 import 'dart:math';
 
 @immutable
@@ -34,6 +35,7 @@ List<String> stoneIro = [
 
 class StoneNotifier extends StateNotifier<List<StoneInformation>> {
   StoneNotifier() : super([]);
+  bool detectTimer = false;
 
   void initStones(int size) {
     int placementId = 0;
@@ -63,6 +65,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
   }
 
   void hideAllStones() {
+    detectTimer = false;
     state = [
       for (final stone in state)
         StoneInformation(
@@ -71,6 +74,28 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
           visiblity: false,
         )
     ];
+  }
+
+  Future<void> hideAllStonesWithTimer(time) async {
+    if (time != 0) {
+      detectTimer = true;
+      await Future.delayed(
+        Duration(seconds: time),
+        () {
+          if (detectTimer) {
+            state = [
+              for (final stone in state)
+                StoneInformation(
+                  id: stone.id,
+                  stoneColor: stone.stoneColor,
+                  visiblity: false,
+                )
+            ];
+            detectTimer = false;
+          }
+        },
+      );
+    }
   }
 
   void hidestone(int stoneId) {
