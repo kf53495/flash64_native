@@ -42,6 +42,9 @@ class Memory64Selection extends ConsumerWidget {
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               onChanged: (value) {
                 ref.read(timeProvider.notifier).state = value;
+                if (value == '') {
+                  ref.read(timeProvider.notifier).state = '0';
+                }
               },
             ),
           ),
