@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:async/async.dart';
 import 'dart:math';
 
 @immutable
@@ -14,16 +13,6 @@ class StoneInformation {
   final int id;
   final String stoneColor;
   final bool visiblity;
-
-  // 以下の記述、不要(?)
-  // 最後まで実装してエラーが起こらなければそのまま削除
-  // StoneInformation copyWith({int? id, bool? stoneColor, bool? visiblity}) {
-  //   return StoneInformation(
-  //     id: id ?? this.id,
-  //     stoneColor: stoneColor ?? this.stoneColor,
-  //     visiblity: visiblity ?? this.visiblity,
-  //   );
-  // }
 }
 
 List<String> stoneIro = [
