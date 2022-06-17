@@ -40,7 +40,7 @@ class Memory64Selection extends ConsumerWidget {
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               onChanged: (value) {
-                ref.read(timeProvider.notifier).setTime(value);
+                ref.read(timeProvider.notifier).state = int.parse(value);
               },
             ),
           ),
