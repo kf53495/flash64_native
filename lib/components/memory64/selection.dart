@@ -37,6 +37,7 @@ class Memory64Selection extends ConsumerWidget {
             width: 100,
             height: 50,
             child: TextField(
+              maxLength: 2,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               onChanged: (value) {
