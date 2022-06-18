@@ -120,6 +120,15 @@ class Memory64Quiz extends ConsumerWidget {
               ),
             ),
           ),
+          Center(
+            child: Visibility(
+              visible: buttonVisiblities.startButton,
+              child: Container(
+                width: 300,
+                height: 200,
+              ),
+            ),
+          ),
         ],
       ),
     );
