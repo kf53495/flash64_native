@@ -8,11 +8,13 @@ class StoneInformation {
     required this.id,
     required this.stoneColor,
     required this.visiblity,
+    required this.correctCount,
   });
 
   final int id;
   final String stoneColor;
   final bool visiblity;
+  final bool correctCount;
 }
 
 List<String> stoneIro = [
@@ -36,6 +38,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
           id: placementId,
           stoneColor: stoneIro[Random().nextInt(2)],
           visiblity: false,
+          correctCount: false,
         )
       ];
       placementId++;
@@ -49,6 +52,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
           id: stone.id,
           stoneColor: stone.stoneColor,
           visiblity: true,
+          correctCount: false,
         )
     ];
   }
@@ -61,6 +65,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
           id: stone.id,
           stoneColor: stone.stoneColor,
           visiblity: false,
+          correctCount: false,
         )
     ];
   }
@@ -78,6 +83,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
                   id: stone.id,
                   stoneColor: stone.stoneColor,
                   visiblity: false,
+                  correctCount: false,
                 )
             ];
             detectTimer = false;
@@ -95,6 +101,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
             id: stone.id,
             stoneColor: stone.stoneColor,
             visiblity: true,
+            correctCount: false,
           )
         else
           stone
