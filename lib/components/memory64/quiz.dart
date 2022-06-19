@@ -14,11 +14,12 @@ class Memory64Quiz extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final int boardSize = ref.watch(boardSizeProvider);
-
     var buttonVisiblities = ref.watch(buttonVisiblityProvider);
     final time = int.parse(ref.watch(timeProvider));
     final readStoneProvider = ref.read(stoneProvider.notifier);
     final readButtonProvider = ref.read(buttonVisiblityProvider.notifier);
+    int correctStones = 0;
+
     return Scaffold(
       appBar: GlobalAppBar(),
       body: Column(
@@ -114,6 +115,7 @@ class Memory64Quiz extends ConsumerWidget {
               child: ElevatedButton(
                 child: const Text('Answer'),
                 onPressed: () {
+                  correctStones = readStoneProvider.countCorrectStones();
                   readButtonProvider.pushAnswerButton();
                   readStoneProvider.displayAllStones();
                 },
@@ -122,10 +124,17 @@ class Memory64Quiz extends ConsumerWidget {
           ),
           Center(
             child: Visibility(
-              visible: buttonVisiblities.startButton,
-              child: Container(
-                width: 300,
-                height: 200,
+              visible: true,
+              child: Row(
+                children: [
+                  Container(
+                    child: Text('正解数: '),
+                  ),
+                  Container(
+                    child: Text(
+                        '${ref.watch(stoneProvider.notifier).countCorrectStones()} / ${boardSize * boardSize}'),
+                  ),
+                ],
               ),
             ),
           ),

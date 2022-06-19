@@ -100,6 +100,20 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
           stone
     ];
   }
+
+  int countCorrectStones() {
+    int count = 0;
+    // (black + true) or (white + false) count +1
+    // (black + false) or (white + true) count no change
+    for (final stone in state) {
+      if (stone.stoneColor == 'black' && stone.visiblity == true) {
+        count++;
+      } else if (stone.stoneColor == 'white' && stone.visiblity == false) {
+        count++;
+      }
+    }
+    return count;
+  }
 }
 
 final stoneProvider =
