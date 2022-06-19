@@ -1,3 +1,4 @@
+import 'package:flash64_native/components/memory64/providers/quiz_mode.dart';
 import 'package:flash64_native/components/memory64/providers/stone_provider.dart';
 import 'package:flash64_native/components/memory64/providers/time_provider.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,29 @@ class Memory64Selection extends ConsumerWidget {
               value: ref.watch(boardSizeProvider),
               onChanged: (int? value) {
                 ref.read(boardSizeProvider.notifier).state = value!;
+              },
+            ),
+          ),
+          SizedBox(
+            width: 200,
+            child: DropdownButton<String>(
+              items: const [
+                DropdownMenuItem(
+                  value: 'onlyBlack',
+                  child: Text('黒を答える'),
+                ),
+                DropdownMenuItem(
+                  value: 'onlyWhite',
+                  child: Text('白を答える'),
+                ),
+                DropdownMenuItem(
+                  value: 'black',
+                  child: Text('両方答える(空きマスあり)'),
+                ),
+              ],
+              value: ref.watch(quizModeProvider),
+              onChanged: (String? value) {
+                ref.read(quizModeProvider.notifier).state = value!;
               },
             ),
           ),
