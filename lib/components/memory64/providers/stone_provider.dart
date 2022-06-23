@@ -9,12 +9,14 @@ class StoneInformation {
     required this.stoneColor,
     required this.visiblity,
     required this.correctCount,
+    required this.boxColor,
   });
 
   final int id;
   final String stoneColor;
   final bool visiblity;
   final bool correctCount;
+  final Color boxColor;
 }
 
 List<String> stoneIro = [
@@ -27,6 +29,7 @@ List<String> stoneIro = [
 class StoneNotifier extends StateNotifier<List<StoneInformation>> {
   StoneNotifier() : super([]);
   bool detectTimer = false;
+  int displayResultCount = 0;
 
   void initStones(int size) {
     int placementId = 0;
@@ -39,10 +42,12 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
           stoneColor: stoneIro[Random().nextInt(2)],
           visiblity: false,
           correctCount: false,
+          boxColor: Colors.blue,
         )
       ];
       placementId++;
     }
+    displayResultCount = 0;
   }
 
   void displayAllStones() {
@@ -53,6 +58,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
           stoneColor: stone.stoneColor,
           visiblity: true,
           correctCount: false,
+          boxColor: Colors.lightGreen,
         )
     ];
   }
@@ -66,6 +72,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
           stoneColor: stone.stoneColor,
           visiblity: false,
           correctCount: false,
+          boxColor: Colors.lightGreen,
         )
     ];
   }
@@ -84,6 +91,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
                   stoneColor: stone.stoneColor,
                   visiblity: false,
                   correctCount: false,
+                  boxColor: Colors.lightGreen,
                 )
             ];
             detectTimer = false;
@@ -93,7 +101,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
     }
   }
 
-  void hidestone(int stoneId) {
+  void displayStone(String mode, int stoneId) {
     state = [
       for (final stone in state)
         if (stone.id == stoneId)
@@ -101,25 +109,59 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
             id: stone.id,
             stoneColor: stone.stoneColor,
             visiblity: true,
-            correctCount: false,
+            correctCount: identifyColor(mode, stone.stoneColor),
+            boxColor: Colors.purple,
           )
         else
           stone
     ];
   }
 
-  int countCorrectStones() {
+  bool identifyColor(String mode, String color) {
+    if (mode == 'onlyBlack' && color == 'black') {
+      return true;
+    } else if (mode == 'onlyWhite' && color == 'white') {
+      return true;
+    } else if (mode == 'black' && color == 'black' ||
+        mode == 'white' && color == 'white') {
+      return true;
+    }
+    return false;
+  }
+
+  int countCorrectStones(mode) {
     int count = 0;
-    // (black + true) or (white + false) count +1
-    // (black + false) or (white + true) count no change
     for (final stone in state) {
-      if (stone.stoneColor == 'black' && stone.visiblity == true) {
-        count++;
-      } else if (stone.stoneColor == 'white' && stone.visiblity == false) {
+      if (stone.correctCount) count++;
+      if (mode == 'onlyBlack' &&
+          stone.stoneColor == 'white' &&
+          stone.visiblity == false) {
         count++;
       }
     }
     return count;
+  }
+
+  void displayResult() {
+    state = [
+      for (final stone in state)
+        if (stone.correctCount)
+          StoneInformation(
+            id: stone.id,
+            stoneColor: stone.stoneColor,
+            visiblity: true,
+            correctCount: true,
+            boxColor: Colors.blueAccent,
+          )
+        else
+          StoneInformation(
+            id: stone.id,
+            stoneColor: stone.stoneColor,
+            visiblity: true,
+            correctCount: false,
+            boxColor: Colors.red,
+          ),
+    ];
   }
 }
 

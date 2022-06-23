@@ -1,4 +1,5 @@
 import 'package:flash64_native/components/memory64/providers/board_size.dart';
+import 'package:flash64_native/components/memory64/providers/quiz_mode.dart';
 import 'package:flash64_native/components/memory64/providers/time_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,7 +19,7 @@ class Memory64Quiz extends ConsumerWidget {
     final time = int.parse(ref.watch(timeProvider));
     final readStoneProvider = ref.read(stoneProvider.notifier);
     final readButtonProvider = ref.read(buttonVisiblityProvider.notifier);
-    int correctStones = 0;
+    final List boxColors = ref.watch(stoneProvider);
 
     return Scaffold(
       appBar: GlobalAppBar(),
@@ -54,7 +55,8 @@ class Memory64Quiz extends ConsumerWidget {
                               if (ref
                                   .read(buttonVisiblityProvider)
                                   .answerButton) {
-                                readStoneProvider.hidestone(
+                                readStoneProvider.displayStone(
+                                  ref.read(quizModeProvider),
                                   _calcStoneId(
                                     verticalBox,
                                     horizontalBox,
@@ -66,7 +68,12 @@ class Memory64Quiz extends ConsumerWidget {
                             child: AspectRatio(
                               aspectRatio: 1,
                               child: Container(
-                                color: Colors.lightGreen,
+                                color: boxColors[_calcStoneId(
+                                  verticalBox,
+                                  horizontalBox,
+                                  boardSize,
+                                )]
+                                    .boxColor,
                                 child: FractionallySizedBox(
                                   widthFactor: 0.85,
                                   child: StoneColor(
@@ -115,9 +122,11 @@ class Memory64Quiz extends ConsumerWidget {
               child: ElevatedButton(
                 child: const Text('Answer'),
                 onPressed: () {
-                  correctStones = readStoneProvider.countCorrectStones();
+                  readStoneProvider
+                      .countCorrectStones(ref.read(quizModeProvider));
                   readButtonProvider.pushAnswerButton();
-                  readStoneProvider.displayAllStones();
+                  // readStoneProvider.displayAllStones();
+                  readStoneProvider.displayResult();
                 },
               ),
             ),
@@ -130,9 +139,12 @@ class Memory64Quiz extends ConsumerWidget {
                   Container(
                     child: Text('正解数: '),
                   ),
-                  Container(
+                  Center(
                     child: Text(
-                        '${ref.watch(stoneProvider.notifier).countCorrectStones()} / ${boardSize * boardSize}'),
+                        '${ref.watch(stoneProvider.notifier).countCorrectStones(ref.watch(quizModeProvider))} / ${boardSize * boardSize}'),
+                  ),
+                  Center(
+                    child: Text(' ${ref.watch(quizModeProvider)}'),
                   ),
                 ],
               ),
@@ -186,7 +198,7 @@ class StoneColor extends ConsumerWidget {
       return Container(
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.lightGreen,
+          color: Colors.grey,
         ),
       );
     }
