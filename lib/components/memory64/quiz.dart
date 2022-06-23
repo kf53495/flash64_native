@@ -125,7 +125,8 @@ class Memory64Quiz extends ConsumerWidget {
                   readStoneProvider
                       .countCorrectStones(ref.read(quizModeProvider));
                   readButtonProvider.pushAnswerButton();
-                  // readStoneProvider.displayAllStones();
+                  readStoneProvider
+                      .checkUntappedStones(ref.watch(quizModeProvider));
                   readStoneProvider.displayResult();
                 },
               ),

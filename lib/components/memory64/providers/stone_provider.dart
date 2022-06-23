@@ -129,17 +129,22 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
     return false;
   }
 
-  int countCorrectStones(mode) {
-    int count = 0;
-    for (final stone in state) {
-      if (stone.correctCount) count++;
-      if (mode == 'onlyBlack' &&
-          stone.stoneColor == 'white' &&
-          stone.visiblity == false) {
-        count++;
-      }
-    }
-    return count;
+  void checkUntappedStones(mode) {
+    state = [
+      for (final stone in state)
+        if (mode == 'onlyBlack' &&
+            stone.stoneColor == 'white' &&
+            stone.visiblity == false)
+          StoneInformation(
+            id: stone.id,
+            stoneColor: stone.stoneColor,
+            visiblity: true,
+            correctCount: true,
+            boxColor: Colors.lightGreen,
+          )
+        else
+          stone
+    ];
   }
 
   void displayResult() {
@@ -162,6 +167,15 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
             boxColor: Colors.red,
           ),
     ];
+  }
+
+  // 正解数を表示する関数
+  int countCorrectStones(mode) {
+    int count = 0;
+    for (final stone in state) {
+      if (stone.correctCount) count++;
+    }
+    return count;
   }
 }
 
