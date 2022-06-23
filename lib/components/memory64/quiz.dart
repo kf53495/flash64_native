@@ -166,7 +166,8 @@ class Memory64Quiz extends ConsumerWidget {
                   children: [
                     AspectRatio(
                       aspectRatio: 1,
-                      child: SizedBox(
+                      child: Container(
+                        color: Colors.green,
                         child: Container(
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
