@@ -151,6 +151,46 @@ class Memory64Quiz extends ConsumerWidget {
               ),
             ),
           ),
+          Visibility(
+            visible: _includeEmpty(ref.watch(quizModeProvider)),
+            child: Center(
+              child: Container(
+                margin: EdgeInsets.only(right: 30, left: 30),
+                width: double.infinity,
+                height: 150,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AspectRatio(
+                      aspectRatio: 1,
+                      child: SizedBox(
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                    AspectRatio(
+                      aspectRatio: 1,
+                      child: SizedBox(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              border: Border.all(color: Colors.black)),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -209,4 +249,12 @@ class StoneColor extends ConsumerWidget {
 int _calcStoneId(vertical, horizontal, boardSize) {
   int specifiedBox = (vertical) + (horizontal * boardSize);
   return specifiedBox;
+}
+
+bool _includeEmpty(mode) {
+  if (mode == 'black' || mode == 'white') {
+    return true;
+  } else {
+    return false;
+  }
 }
