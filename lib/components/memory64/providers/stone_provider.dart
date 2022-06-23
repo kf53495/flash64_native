@@ -109,15 +109,15 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
             id: stone.id,
             stoneColor: stone.stoneColor,
             visiblity: true,
-            correctCount: identifyColor(mode, stone.stoneColor),
-            boxColor: Colors.purple,
+            correctCount: checkTappedStone(mode, stone.stoneColor),
+            boxColor: Colors.lightGreen,
           )
         else
           stone
     ];
   }
 
-  bool identifyColor(String mode, String color) {
+  bool checkTappedStone(String mode, String color) {
     if (mode == 'onlyBlack' && color == 'black') {
       return true;
     } else if (mode == 'onlyWhite' && color == 'white') {
@@ -129,19 +129,37 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
     return false;
   }
 
+  // Answer時に、非表示になっている石の正誤を確かめる
   void checkUntappedStones(mode) {
     state = [
       for (final stone in state)
-        if (mode == 'onlyBlack' &&
-            stone.stoneColor == 'white' &&
-            stone.visiblity == false)
-          StoneInformation(
-            id: stone.id,
-            stoneColor: stone.stoneColor,
-            visiblity: true,
-            correctCount: true,
-            boxColor: Colors.lightGreen,
-          )
+        if (stone.visiblity == false)
+          if (mode == 'onlyBlack' && stone.stoneColor == 'white')
+            StoneInformation(
+              id: stone.id,
+              stoneColor: stone.stoneColor,
+              visiblity: true,
+              correctCount: true,
+              boxColor: Colors.lightGreen,
+            )
+          else if (mode == 'onlyWhite' && stone.stoneColor == 'black')
+            StoneInformation(
+              id: stone.id,
+              stoneColor: stone.stoneColor,
+              visiblity: true,
+              correctCount: true,
+              boxColor: Colors.lightGreen,
+            )
+          else if (stone.stoneColor == 'empty')
+            StoneInformation(
+              id: stone.id,
+              stoneColor: stone.stoneColor,
+              visiblity: true,
+              correctCount: true,
+              boxColor: Colors.lightGreen,
+            )
+          else
+            stone
         else
           stone
     ];

@@ -19,7 +19,7 @@ class Memory64Quiz extends ConsumerWidget {
     final time = int.parse(ref.watch(timeProvider));
     final readStoneProvider = ref.read(stoneProvider.notifier);
     final readButtonProvider = ref.read(buttonVisiblityProvider.notifier);
-    final List boxColors = ref.watch(stoneProvider);
+    final List<StoneInformation> boxColors = ref.watch(stoneProvider);
 
     return Scaffold(
       appBar: GlobalAppBar(),
