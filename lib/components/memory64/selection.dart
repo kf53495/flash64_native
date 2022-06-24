@@ -47,7 +47,7 @@ class Memory64Selection extends ConsumerWidget {
                   child: Text('白を答える'),
                 ),
                 DropdownMenuItem(
-                  value: 'black',
+                  value: 'empty',
                   child: Text('両方答える(空きマスあり)'),
                 ),
               ],

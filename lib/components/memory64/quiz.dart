@@ -1,5 +1,6 @@
 import 'package:flash64_native/components/memory64/providers/board_size.dart';
 import 'package:flash64_native/components/memory64/providers/quiz_mode.dart';
+import 'package:flash64_native/components/memory64/providers/select_stone.dart';
 import 'package:flash64_native/components/memory64/providers/time_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,6 +21,9 @@ class Memory64Quiz extends ConsumerWidget {
     final readStoneProvider = ref.read(stoneProvider.notifier);
     final readButtonProvider = ref.read(buttonVisiblityProvider.notifier);
     final List<StoneInformation> boxColors = ref.watch(stoneProvider);
+    // 空きマスありモードで使用
+    String selectedStone =
+        ref.watch(selectStoneProvider.notifier).selectedStone();
 
     return Scaffold(
       appBar: GlobalAppBar(),
@@ -57,6 +61,9 @@ class Memory64Quiz extends ConsumerWidget {
                                   .answerButton) {
                                 readStoneProvider.displayStone(
                                   ref.read(quizModeProvider),
+                                  ref
+                                      .read(selectStoneProvider.notifier)
+                                      .selectedStone(),
                                   _calcStoneId(
                                     verticalBox,
                                     horizontalBox,
@@ -164,26 +171,44 @@ class Memory64Quiz extends ConsumerWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    AspectRatio(
-                      aspectRatio: 1,
-                      child: Container(
-                        color: Colors.green,
+                    GestureDetector(
+                      onTap: () {
+                        ref.read(selectStoneProvider.notifier).selectBlack();
+                      },
+                      child: AspectRatio(
+                        aspectRatio: 1,
                         child: Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.black,
+                          decoration: BoxDecoration(
+                            color: ref.watch(selectStoneProvider).black
+                                ? Colors.amber
+                                : Colors.white,
+                          ),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    AspectRatio(
-                      aspectRatio: 1,
-                      child: SizedBox(
+                    GestureDetector(
+                      onTap: () {
+                        ref.read(selectStoneProvider.notifier).selectWhite();
+                      },
+                      child: AspectRatio(
+                        aspectRatio: 1,
                         child: Container(
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                              border: Border.all(color: Colors.black)),
+                            color: ref.watch(selectStoneProvider).white
+                                ? Colors.amber
+                                : Colors.white,
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: Colors.black)),
+                          ),
                         ),
                       ),
                     ),
@@ -253,7 +278,7 @@ int _calcStoneId(vertical, horizontal, boardSize) {
 }
 
 bool _includeEmpty(mode) {
-  if (mode == 'black' || mode == 'white') {
+  if (mode == 'empty') {
     return true;
   } else {
     return false;

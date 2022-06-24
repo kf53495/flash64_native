@@ -19,7 +19,7 @@ class StoneInformation {
   final Color boxColor;
 }
 
-List<String> stoneIro = [
+List<String> stoneColorType = [
   'black',
   'white',
   // のちに実装
@@ -39,7 +39,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
         ...state,
         StoneInformation(
           id: placementId,
-          stoneColor: stoneIro[Random().nextInt(2)],
+          stoneColor: stoneColorType[Random().nextInt(2)],
           visiblity: false,
           correctCount: false,
           boxColor: Colors.blue,
@@ -101,7 +101,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
     }
   }
 
-  void displayStone(String mode, int stoneId) {
+  void displayStone(String mode, String emptyMode, int stoneId) {
     state = [
       for (final stone in state)
         if (stone.id == stoneId)
@@ -109,7 +109,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
             id: stone.id,
             stoneColor: stone.stoneColor,
             visiblity: true,
-            correctCount: checkTappedStone(mode, stone.stoneColor),
+            correctCount: checkTappedStone(mode, emptyMode, stone.stoneColor),
             boxColor: Colors.lightGreen,
           )
         else
@@ -117,20 +117,20 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
     ];
   }
 
-  bool checkTappedStone(String mode, String color) {
+  bool checkTappedStone(String mode, String emptyMode, String color) {
     if (mode == 'onlyBlack' && color == 'black') {
       return true;
     } else if (mode == 'onlyWhite' && color == 'white') {
       return true;
-    } else if (mode == 'black' && color == 'black' ||
-        mode == 'white' && color == 'white') {
+    } else if (emptyMode == 'black' && color == 'black' ||
+        emptyMode == 'white' && color == 'white') {
       return true;
     }
     return false;
   }
 
   // Answer時に、非表示になっている石の正誤を確かめる
-  void checkUntappedStones(mode) {
+  void checkUntappedStones(String mode) {
     state = [
       for (final stone in state)
         if (stone.visiblity == false)

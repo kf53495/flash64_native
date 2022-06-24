@@ -10,7 +10,7 @@ class Selected {
 }
 
 class SelectStoneNotifier extends StateNotifier<Selected> {
-  SelectStoneNotifier() : super(const Selected(black: true, white: false));
+  SelectStoneNotifier() : super(const Selected(black: false, white: false));
 
   void selectBlack() {
     state = const Selected(black: true, white: false);
@@ -18,6 +18,15 @@ class SelectStoneNotifier extends StateNotifier<Selected> {
 
   void selectWhite() {
     state = const Selected(black: false, white: true);
+  }
+
+  String selectedStone() {
+    if (state.black) {
+      return 'black';
+    } else if (state.white) {
+      return 'white';
+    }
+    return 'empty';
   }
 }
 
