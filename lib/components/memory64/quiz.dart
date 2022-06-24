@@ -251,14 +251,9 @@ class StoneColor extends ConsumerWidget {
           ),
         );
       } else {
-        return Visibility(
-          visible: true,
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.black),
-            ),
-          ),
+        return const Visibility(
+          visible: false,
+          child: SizedBox(),
         );
       }
     } else {

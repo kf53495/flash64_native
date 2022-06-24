@@ -111,7 +111,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
             stoneColor: stone.stoneColor,
             visiblity: true,
             correctCount: checkTappedStone(mode, emptyMode, stone.stoneColor),
-            boxColor: Colors.lightGreen,
+            boxColor: Colors.green,
           )
         else
           stone
