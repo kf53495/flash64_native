@@ -76,9 +76,8 @@ class Memory64Selection extends ConsumerWidget {
             child: ElevatedButton(
               child: const Text('answer quiz'),
               onPressed: () {
-                ref
-                    .read(stoneProvider.notifier)
-                    .initStones(boardSize * boardSize);
+                ref.read(stoneProvider.notifier).initStones(
+                    boardSize * boardSize, ref.read(quizModeProvider));
                 Navigator.push(
                   context,
                   MaterialPageRoute(

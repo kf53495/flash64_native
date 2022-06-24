@@ -22,8 +22,7 @@ class StoneInformation {
 List<String> stoneColorType = [
   'black',
   'white',
-  // のちに実装
-  // 'empty',
+  'empty',
 ];
 
 class StoneNotifier extends StateNotifier<List<StoneInformation>> {
@@ -31,7 +30,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
   bool detectTimer = false;
   int displayResultCount = 0;
 
-  void initStones(int size) {
+  void initStones(int size, String mode) {
     int placementId = 0;
     state = [];
     for (int i = 0; i < size; i++) {
@@ -39,7 +38,9 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
         ...state,
         StoneInformation(
           id: placementId,
-          stoneColor: stoneColorType[Random().nextInt(2)],
+          stoneColor: mode == 'empty'
+              ? stoneColorType[Random().nextInt(3)] // 空白あり
+              : stoneColorType[Random().nextInt(2)], // onlyBlack、onlyWhite
           visiblity: false,
           correctCount: false,
           boxColor: Colors.blue,
