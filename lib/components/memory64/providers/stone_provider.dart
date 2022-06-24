@@ -105,7 +105,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
   void displayStone(String mode, String emptyMode, int stoneId) {
     state = [
       for (final stone in state)
-        if (stone.id == stoneId)
+        if (stone.id == stoneId && stone.visiblity == false)
           StoneInformation(
             id: stone.id,
             stoneColor: stone.stoneColor,
