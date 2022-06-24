@@ -21,9 +21,6 @@ class Memory64Quiz extends ConsumerWidget {
     final readStoneProvider = ref.read(stoneProvider.notifier);
     final readButtonProvider = ref.read(buttonVisiblityProvider.notifier);
     final List<StoneInformation> boxColors = ref.watch(stoneProvider);
-    // 空きマスありモードで使用
-    String selectedStone =
-        ref.watch(selectStoneProvider.notifier).selectedStone();
 
     return Scaffold(
       appBar: GlobalAppBar(),
