@@ -43,7 +43,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
               : stoneColorType[Random().nextInt(2)], // onlyBlack、onlyWhite
           visiblity: false,
           correctCount: false,
-          boxColor: Colors.blue,
+          boxColor: Colors.lightGreen,
         )
       ];
       placementId++;
@@ -175,7 +175,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
             stoneColor: stone.stoneColor,
             visiblity: true,
             correctCount: true,
-            boxColor: Colors.blueAccent,
+            boxColor: Colors.lightGreen,
           )
         else
           StoneInformation(

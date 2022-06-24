@@ -31,6 +31,6 @@ class SelectStoneNotifier extends StateNotifier<Selected> {
 }
 
 final selectStoneProvider =
-    StateNotifierProvider<SelectStoneNotifier, Selected>(
+    StateNotifierProvider.autoDispose<SelectStoneNotifier, Selected>(
   (ref) => SelectStoneNotifier(),
 );

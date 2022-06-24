@@ -254,10 +254,13 @@ class StoneColor extends ConsumerWidget {
           ),
         );
       } else {
-        return Container(
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.lightGreen,
+        return Visibility(
+          visible: true,
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.black),
+            ),
           ),
         );
       }
@@ -265,7 +268,7 @@ class StoneColor extends ConsumerWidget {
       return Container(
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.grey,
+          color: Colors.lightGreen,
         ),
       );
     }
