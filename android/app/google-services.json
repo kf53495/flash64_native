@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "915630455070",
+    "project_id": "flash64-native",
+    "storage_bucket": "flash64-native.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915630455070:android:8fbe1be086424451c9310f",
+        "android_client_info": {
+          "package_name": "com.example.flash64_native"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915630455070-0mtjqn292ntmuo2euo5k1lluuifhpo0t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChySg6NyHDt5qQC9zJacSKUJOb13CNx68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915630455070-0mtjqn292ntmuo2euo5k1lluuifhpo0t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
