@@ -8,17 +8,17 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GlobalAppBar(),
+      appBar: const GlobalAppBar(),
       body: Column(
         children: [
-          Container(
+          const SizedBox(
             width: 100,
             height: 50,
             child: Placeholder(
               color: Colors.blueAccent,
             ),
           ),
-          Container(
+          const SizedBox(
             width: 100,
             height: 50,
             child: Placeholder(
@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Memory64Selection(),
+                    builder: (context) => const Memory64Selection(),
                   ),
                 );
               },
