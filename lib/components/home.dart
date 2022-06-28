@@ -1,3 +1,4 @@
+import 'package:flash64_native/components/users/login.dart';
 import 'package:flutter/material.dart';
 import 'global_components/appbar.dart';
 import 'memory64/selection.dart';
@@ -18,11 +19,20 @@ class HomePage extends StatelessWidget {
               color: Colors.blueAccent,
             ),
           ),
-          const SizedBox(
-            width: 100,
-            height: 50,
-            child: Placeholder(
-              color: Colors.blueAccent,
+          SizedBox(
+            width: double.infinity,
+            child: Center(
+              child: ElevatedButton(
+                child: const Text('ログイン画面へ(仮置き)'), //のちにリダイレクトするようにする
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Login(),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
           Center(
