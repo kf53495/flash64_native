@@ -1,6 +1,3 @@
-import 'package:flash64_native/components/memory64/providers/quiz_mode.dart';
-import 'package:flash64_native/components/memory64/providers/stone_provider.dart';
-import 'package:flash64_native/components/memory64/providers/time_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,8 +8,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class Login extends ConsumerWidget {
-  Login({
+class Registration extends ConsumerWidget {
+  Registration({
     Key? key,
   }) : super(key: key);
   final _auth = FirebaseAuth.instance;
@@ -49,7 +46,7 @@ class Login extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(10),
               child: ElevatedButton(
-                child: const Text('Login'),
+                child: const Text('create account'),
                 onPressed: () async {
                   try {
                     final credential =
