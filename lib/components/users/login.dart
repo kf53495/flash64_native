@@ -9,12 +9,12 @@ class Login extends ConsumerWidget {
   Login({
     Key? key,
   }) : super(key: key);
-  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String _email = ref.watch(inputEmailProvider);
-    String _password = ref.watch(inputPasswordProvider);
+    String email = ref.watch(inputEmailProvider);
+    String password = ref.watch(inputPasswordProvider);
+    String errorMessage = ref.watch(errorMessagePrivider);
     return Scaffold(
       appBar: const GlobalAppBar(),
       body: Center(
@@ -25,7 +25,7 @@ class Login extends ConsumerWidget {
               child: TextField(
                 decoration: const InputDecoration(labelText: 'email'),
                 onChanged: (String value) {
-                  _email = value;
+                  email = value;
                 },
               ),
             ),
@@ -36,9 +36,13 @@ class Login extends ConsumerWidget {
                 obscureText: true,
                 maxLength: 20,
                 onChanged: (String value) {
-                  _password = value;
+                  password = value;
                 },
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Text(errorMessage),
             ),
             Padding(
               padding: const EdgeInsets.all(10),
@@ -48,21 +52,24 @@ class Login extends ConsumerWidget {
                   try {
                     final credential =
                         await FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: _email,
-                      password: _password,
+                      email: email,
+                      password: password,
                     );
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HomePage(),
-                      ),
+                    await Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) {
+                        return const HomePage();
+                      }),
                     );
                   } on FirebaseAuthException catch (e) {
                     if (e.code == 'user-not-found') {
-                      print('No user found for that email.');
+                      errorMessage = 'No user found for that email.';
                     } else if (e.code == 'wrong-password') {
-                      print('Wrong password provided for that user.');
+                      errorMessage = 'Wrong password provided for that user.';
+                    } else {
+                      errorMessage = e.code;
                     }
+                  } catch (e) {
+                    errorMessage = e.toString();
                   }
                 },
               ),
