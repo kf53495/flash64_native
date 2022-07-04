@@ -1,26 +1,20 @@
-import 'package:flash64_native/components/memory64/providers/quiz_mode.dart';
-import 'package:flash64_native/components/memory64/providers/stone_provider.dart';
-import 'package:flash64_native/components/memory64/providers/time_provider.dart';
+import 'package:flash64_native/components/home.dart';
+import 'package:flash64_native/components/users/providers/user_input.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
-import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 class Login extends ConsumerWidget {
   Login({
     Key? key,
   }) : super(key: key);
   final _auth = FirebaseAuth.instance;
-  String _email = '';
-  String _password = '';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String _email = ref.watch(inputEmailProvider);
+    String _password = ref.watch(inputPasswordProvider);
     return Scaffold(
       appBar: const GlobalAppBar(),
       body: Center(
@@ -56,6 +50,12 @@ class Login extends ConsumerWidget {
                         await FirebaseAuth.instance.signInWithEmailAndPassword(
                       email: _email,
                       password: _password,
+                    );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      ),
                     );
                   } on FirebaseAuthException catch (e) {
                     if (e.code == 'user-not-found') {

@@ -1,3 +1,5 @@
+import 'package:flash64_native/components/home.dart';
+import 'package:flash64_native/components/users/providers/user_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,11 +15,10 @@ class Registration extends ConsumerWidget {
     Key? key,
   }) : super(key: key);
   final _auth = FirebaseAuth.instance;
-  String _email = '';
-  String _password = '';
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String email = ref.watch(inputEmailProvider);
+    String password = ref.watch(inputPasswordProvider);
     return Scaffold(
       appBar: const GlobalAppBar(),
       body: Center(
@@ -28,7 +29,7 @@ class Registration extends ConsumerWidget {
               child: TextField(
                 decoration: const InputDecoration(labelText: 'email'),
                 onChanged: (String value) {
-                  _email = value;
+                  ref.read(inputEmailProvider.notifier).state = value;
                 },
               ),
             ),
@@ -39,7 +40,7 @@ class Registration extends ConsumerWidget {
                 obscureText: true,
                 maxLength: 20,
                 onChanged: (String value) {
-                  _password = value;
+                  ref.read(inputPasswordProvider.notifier).state = value;
                 },
               ),
             ),
@@ -50,9 +51,9 @@ class Registration extends ConsumerWidget {
                 onPressed: () async {
                   try {
                     final credential =
-                        await FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: _email,
-                      password: _password,
+                        await _auth.createUserWithEmailAndPassword(
+                      email: email,
+                      password: password,
                     );
                   } on FirebaseAuthException catch (e) {
                     if (e.code == 'user-not-found') {
@@ -60,10 +61,24 @@ class Registration extends ConsumerWidget {
                     } else if (e.code == 'wrong-password') {
                       print('Wrong password provided for that user.');
                     }
+                  } catch (e) {
+                    print(e);
                   }
+                  await FirebaseFirestore.instance.collection('users').add({
+                    'email': email,
+                    'password': password,
+                  });
                 },
               ),
             ),
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: Text(email),
+            ),
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: Text(password),
+            )
           ],
         ),
       ),
