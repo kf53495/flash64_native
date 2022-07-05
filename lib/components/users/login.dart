@@ -14,7 +14,7 @@ class Login extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     String email = ref.watch(inputEmailProvider);
     String password = ref.watch(inputPasswordProvider);
-    String errorMessage = ref.watch(errorMessagePrivider);
+    String errorMessage = ref.watch(errorMessageProvider);
     return Scaffold(
       appBar: const GlobalAppBar(),
       body: Center(
