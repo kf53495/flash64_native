@@ -61,15 +61,7 @@ class Login extends ConsumerWidget {
                       }),
                     );
                   } on FirebaseAuthException catch (e) {
-                    if (e.code == 'user-not-found') {
-                      errorMessage = 'No user found for that email.';
-                    } else if (e.code == 'wrong-password') {
-                      errorMessage = 'Wrong password provided for that user.';
-                    } else {
-                      errorMessage = e.code;
-                    }
-                  } catch (e) {
-                    errorMessage = e.toString();
+                    ref.read(errorMessageProvider.notifier).state = e.message!;
                   }
                 },
               ),
