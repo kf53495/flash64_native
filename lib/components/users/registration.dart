@@ -9,7 +9,7 @@ class Registration extends ConsumerWidget {
   Registration({
     Key? key,
   }) : super(key: key);
-  final _auth = FirebaseAuth.instance;
+  // final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     String email = ref.watch(inputEmailProvider);
@@ -50,11 +50,12 @@ class Registration extends ConsumerWidget {
                 child: const Text('create account'),
                 onPressed: () async {
                   try {
-                    final credential =
-                        await _auth.createUserWithEmailAndPassword(
+                    final credential = await FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
                       email: email,
                       password: password,
                     );
+                    print('aa');
                     await Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) {
                         return const HomePage();
