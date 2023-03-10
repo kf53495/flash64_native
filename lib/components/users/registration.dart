@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash64_native/components/home.dart';
 import 'package:flash64_native/components/users/providers/user_input.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,14 @@ class Registration extends ConsumerWidget {
                       email: email,
                       password: password,
                     );
-                    print('aa');
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc()
+                        .set({
+                      'username': 'test',
+                      'email': email,
+                      'password': password
+                    });
                     await Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) {
                         return const HomePage();
