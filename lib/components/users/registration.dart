@@ -13,6 +13,7 @@ class Registration extends ConsumerWidget {
   // final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String username = ref.watch(inputUsernameProvider);
     String email = ref.watch(inputEmailProvider);
     String password = ref.watch(inputPasswordProvider);
     String errorMessage = ref.watch(errorMessageProvider);
@@ -21,6 +22,15 @@ class Registration extends ConsumerWidget {
       body: Center(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                decoration: const InputDecoration(labelText: 'username'),
+                onChanged: (String value) {
+                  ref.read(inputUsernameProvider.notifier).state = value;
+                },
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(10),
               child: TextField(
@@ -60,7 +70,7 @@ class Registration extends ConsumerWidget {
                         .collection('users')
                         .doc()
                         .set({
-                      'username': 'test',
+                      'username': username,
                       'email': email,
                       'password': password
                     });
