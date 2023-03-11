@@ -75,7 +75,7 @@ class Registration extends ConsumerWidget {
                       'password': password
                     });
 
-                    await Future.delayed(const Duration(seconds: 1));
+                    await Future.delayed(const Duration(milliseconds: 10));
                     if (context.mounted) return; //表記が正しいかわからないため後日検討(3/11)
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) {

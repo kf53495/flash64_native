@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash64_native/components/users/login.dart';
 import 'package:flash64_native/components/users/registration.dart';
 import 'package:flutter/material.dart';
@@ -30,12 +31,58 @@ class HomePage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => Login(),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Center(
+              child: ElevatedButton(
+                child: const Text('ユーザー登録へ'),
+                onPressed: () {
+                  final uid = FirebaseAuth.instance.currentUser?.uid.toString();
+                  if (uid != null) {
+                    debugPrint(uid);
+                    debugPrint('ok');
+                  } else {
+                    debugPrint('userなし');
+                  }
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => Registration(),
                     ),
                   );
+                },
+              ),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Center(
+              child: ElevatedButton(
+                child: const Text('ログイン画面へ'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Login(),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Center(
+              child: ElevatedButton(
+                child: const Text('ログアウト'),
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
                 },
               ),
             ),
