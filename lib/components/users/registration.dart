@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash64_native/components/home.dart';
 import 'package:flash64_native/components/users/providers/user_input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +11,6 @@ class Registration extends ConsumerWidget {
   Registration({
     Key? key,
   }) : super(key: key);
-  // final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     String username = ref.watch(inputUsernameProvider);
@@ -74,7 +74,10 @@ class Registration extends ConsumerWidget {
                       'email': email,
                       'password': password
                     });
-                    await Navigator.of(context).pushReplacement(
+
+                    await Future.delayed(const Duration(seconds: 1));
+                    if (context.mounted) return; //表記が正しいかわからないため後日検討(3/11)
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) {
                         return const HomePage();
                       }),

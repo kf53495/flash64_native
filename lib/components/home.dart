@@ -24,8 +24,12 @@ class HomePage extends StatelessWidget {
             width: double.infinity,
             child: Center(
               child: ElevatedButton(
-                child: const Text('ログイン画面へ(仮置き)'), //のちにリダイレクトするようにする
+                child: const Text('ログイン画面へ'),
                 onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Login(),
                   Navigator.push(
                     context,
                     MaterialPageRoute(
