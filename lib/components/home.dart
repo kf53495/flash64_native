@@ -79,6 +79,7 @@ class HomePage extends ConsumerWidget {
                 child: const Text('ログアウト'),
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();
+                  ref.read(userInformationProvider.notifier).state = '';
                   if (context.mounted) {
                     await Navigator.of(context).pushReplacement(
                       MaterialPageRoute(

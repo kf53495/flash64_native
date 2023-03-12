@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash64_native/components/home.dart';
+import 'package:flash64_native/components/users/providers/user_info.dart';
 import 'package:flash64_native/components/users/providers/user_input.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -50,16 +52,31 @@ class Login extends ConsumerWidget {
                 child: const Text('Login'),
                 onPressed: () async {
                   try {
-                    final credential =
-                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
                       email: email,
                       password: password,
                     );
-                    await Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) {
-                        return const HomePage();
-                      }),
+                    final uid =
+                        FirebaseAuth.instance.currentUser?.uid.toString();
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(uid)
+                        .get()
+                        .then(
+                      (DocumentSnapshot snapshot) {
+                        ref.read(userInformationProvider.notifier).state =
+                            snapshot.get('username');
+                      },
                     );
+                    if (context.mounted) {
+                      await Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const HomePage();
+                          },
+                        ),
+                      );
+                    }
                   } on FirebaseAuthException catch (e) {
                     ref.read(errorMessageProvider.notifier).state = e.message!;
                   }
