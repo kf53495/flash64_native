@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash64_native/components/users/login.dart';
 import 'package:flash64_native/components/users/registration.dart';
@@ -14,13 +15,11 @@ class HomePage extends StatelessWidget {
       appBar: const GlobalAppBar(),
       body: Column(
         children: [
-          const SizedBox(
-            width: 100,
-            height: 50,
-            child: Placeholder(
-              color: Colors.blueAccent,
-            ),
-          ),
+          Container(
+              alignment: Alignment.centerLeft,
+              width: 200,
+              height: 200,
+              child: _username()),
           SizedBox(
             width: double.infinity,
             child: Center(
@@ -43,13 +42,6 @@ class HomePage extends StatelessWidget {
               child: ElevatedButton(
                 child: const Text('ユーザー登録へ'),
                 onPressed: () {
-                  final uid = FirebaseAuth.instance.currentUser?.uid.toString();
-                  if (uid != null) {
-                    debugPrint(uid);
-                    debugPrint('ok');
-                  } else {
-                    debugPrint('userなし');
-                  }
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -83,6 +75,15 @@ class HomePage extends StatelessWidget {
                 child: const Text('ログアウト'),
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();
+                  if (context.mounted) {
+                    await Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const HomePage();
+                        },
+                      ),
+                    );
+                  }
                 },
               ),
             ),
@@ -104,4 +105,19 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+Text _username() {
+  final uid = FirebaseAuth.instance.currentUser?.email.toString();
+  String useraaa = 'a';
+  if (uid != null) {
+    FirebaseFirestore.instance.collection('users').doc(uid).get().then(
+      (DocumentSnapshot snapshot) {
+        debugPrint(snapshot.get('username'));
+        debugPrint(useraaa);
+        useraaa = snapshot.get('username');
+      },
+    );
+  }
+  return Text('こんにちは、$useraaa');
 }
