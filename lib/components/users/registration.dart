@@ -61,27 +61,21 @@ class Registration extends ConsumerWidget {
                 child: const Text('create account'),
                 onPressed: () async {
                   try {
-                    final credential = await FirebaseAuth.instance
-                        .createUserWithEmailAndPassword(
+                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
                       email: email,
                       password: password,
                     );
                     await FirebaseFirestore.instance
                         .collection('users')
-                        .doc()
-                        .set({
-                      'username': username,
-                      'email': email,
-                      'password': password
-                    });
-
-                    await Future.delayed(const Duration(milliseconds: 10));
-                    if (context.mounted) return; //表記が正しいかわからないため後日検討(3/11)
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) {
-                        return const HomePage();
-                      }),
-                    );
+                        .doc(email)
+                        .set({'username': username, 'password': password});
+                    if (context.mounted) {
+                      await Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) {
+                          return const HomePage();
+                        }),
+                      );
+                    }
                   } on FirebaseAuthException catch (e) {
                     ref.read(errorMessageProvider.notifier).state = e.message!;
                   }
