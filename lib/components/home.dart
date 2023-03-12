@@ -1,25 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash64_native/components/users/login.dart';
+import 'package:flash64_native/components/users/providers/user_info.dart';
 import 'package:flash64_native/components/users/registration.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'global_components/appbar.dart';
 import 'memory64/selection.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final username = ref.watch(userInformationProvider);
     return Scaffold(
       appBar: const GlobalAppBar(),
       body: Column(
         children: [
           Container(
-              alignment: Alignment.centerLeft,
-              width: 200,
-              height: 200,
-              child: _username()),
+            alignment: Alignment.centerLeft,
+            width: 200,
+            height: 200,
+            child: Text('こんにちは、$usernameさん'),
+          ),
           SizedBox(
             width: double.infinity,
             child: Center(
