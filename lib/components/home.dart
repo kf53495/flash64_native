@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash64_native/components/users/login.dart';
 import 'package:flash64_native/components/users/providers/user_info.dart';
@@ -33,7 +32,7 @@ class HomePage extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Login(),
+                      builder: (context) => const Login(),
                     ),
                   );
                 },
@@ -49,7 +48,7 @@ class HomePage extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Registration(),
+                      builder: (context) => const Registration(),
                     ),
                   );
                 },
@@ -65,7 +64,7 @@ class HomePage extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Login(),
+                      builder: (context) => const Login(),
                     ),
                   );
                 },
@@ -110,19 +109,4 @@ class HomePage extends ConsumerWidget {
       ),
     );
   }
-}
-
-Text _username() {
-  final uid = FirebaseAuth.instance.currentUser?.email.toString();
-  String useraaa = 'a';
-  if (uid != null) {
-    FirebaseFirestore.instance.collection('users').doc(uid).get().then(
-      (DocumentSnapshot snapshot) {
-        debugPrint(snapshot.get('username'));
-        debugPrint(useraaa);
-        useraaa = snapshot.get('username');
-      },
-    );
-  }
-  return Text('こんにちは、$useraaa');
 }

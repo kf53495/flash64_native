@@ -8,7 +8,7 @@ import '../global_components/appbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends ConsumerWidget {
-  Login({
+  const Login({
     Key? key,
   }) : super(key: key);
 
