@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash64_native/components/users/login.dart';
+import 'package:flash64_native/components/users/my_page.dart';
 import 'package:flash64_native/components/users/providers/user_info.dart';
 import 'package:flash64_native/components/users/registration.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +89,22 @@ class HomePage extends ConsumerWidget {
                       ),
                     );
                   }
+                },
+              ),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Center(
+              child: ElevatedButton(
+                child: const Text('マイページ'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyPage(),
+                    ),
+                  );
                 },
               ),
             ),
