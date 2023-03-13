@@ -29,7 +29,7 @@ class MentalCalcSelection extends ConsumerWidget {
                 for (int i = 3; i < 13; i++)
                   DropdownMenuItem(
                     value: i,
-                    child: Text('$i個'),
+                    child: Text('$i'),
                   )
               ],
               value: 12,

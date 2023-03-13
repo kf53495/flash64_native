@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash64_native/components/select_quiz.dart';
 import 'package:flash64_native/components/users/login.dart';
 import 'package:flash64_native/components/users/my_page.dart';
 import 'package:flash64_native/components/users/providers/user_info.dart';
@@ -111,12 +112,12 @@ class HomePage extends ConsumerWidget {
           ),
           Center(
             child: ElevatedButton(
-              child: const Text('デザイン練習へ'),
+              child: const Text('モード選択'),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Memory64Selection(),
+                    builder: (context) => const SelectQuiz(),
                   ),
                 );
               },
