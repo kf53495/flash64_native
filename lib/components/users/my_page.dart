@@ -1,5 +1,4 @@
 import 'package:flash64_native/components/users/providers/user_info.dart';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
