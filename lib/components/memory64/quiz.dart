@@ -23,7 +23,7 @@ class Memory64Quiz extends ConsumerWidget {
     final List<StoneInformation> boxColors = ref.watch(stoneProvider);
 
     return Scaffold(
-      appBar: GlobalAppBar(),
+      appBar: const GlobalAppBar(),
       body: Column(
         children: [
           AspectRatio(
@@ -141,7 +141,7 @@ class Memory64Quiz extends ConsumerWidget {
               visible: true,
               child: Row(
                 children: [
-                  Container(
+                  const SizedBox(
                     child: Text('正解数: '),
                   ),
                   Center(
@@ -159,7 +159,7 @@ class Memory64Quiz extends ConsumerWidget {
             visible: _includeEmpty(ref.watch(quizModeProvider)),
             child: Center(
               child: Container(
-                margin: EdgeInsets.only(right: 30, left: 30),
+                margin: const EdgeInsets.only(right: 30, left: 30),
                 width: double.infinity,
                 height: 150,
                 decoration: BoxDecoration(

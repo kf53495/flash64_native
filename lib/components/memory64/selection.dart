@@ -15,7 +15,7 @@ class Memory64Selection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     int boardSize = ref.watch(boardSizeProvider);
     return Scaffold(
-      appBar: GlobalAppBar(),
+      appBar: const GlobalAppBar(),
       body: Column(
         children: [
           SizedBox(
