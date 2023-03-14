@@ -1,4 +1,5 @@
 import 'package:flash64_native/components/home.dart';
+import 'package:flash64_native/components/mental_calc/quiz.dart';
 import 'package:flash64_native/components/users/providers/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -43,7 +44,7 @@ class MentalCalcSelection extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const HomePage(),
+                    builder: (context) => const MentalCalcQuiz(),
                   ),
                 );
               },
