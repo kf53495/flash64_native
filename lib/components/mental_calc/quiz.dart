@@ -73,9 +73,11 @@ class MentalCalcQuiz extends ConsumerWidget {
                   FilteringTextInputFormatter.allow(RegExp(r'[-0-9]'))
                 ],
                 onChanged: (value) {
-                  ref.read(answerNumProvider.notifier).state = int.parse(value);
-                  if (value == '') {
+                  if (value.isEmpty || value == '-') {
                     ref.read(answerNumProvider.notifier).state = 0;
+                  } else {
+                    ref.read(answerNumProvider.notifier).state =
+                        int.parse(value);
                   }
                   ref.read(answerFieldProvider.notifier).state = true;
                 },
