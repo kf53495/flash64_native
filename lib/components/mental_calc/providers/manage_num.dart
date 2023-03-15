@@ -8,13 +8,16 @@ class NumManager {
   const NumManager({
     required this.num,
     required this.sum,
+    required this.numColor,
   });
   final int num;
   final int sum;
+  final Color numColor;
 }
 
 class NumbersNotifier extends StateNotifier<NumManager> {
-  NumbersNotifier() : super(const NumManager(num: 10000, sum: 0));
+  NumbersNotifier()
+      : super(const NumManager(num: 10000, sum: 0, numColor: Colors.black));
   List numbers = [];
   int sum = 0;
 
@@ -25,21 +28,21 @@ class NumbersNotifier extends StateNotifier<NumManager> {
         const Duration(seconds: 1),
         () {
           if (i.isEven) {
-            state = NumManager(num: number, sum: 0);
+            state = NumManager(num: number, sum: 0, numColor: Colors.red);
             sum += number;
           } else {
-            state = NumManager(num: number, sum: 0);
+            state = NumManager(num: number, sum: 0, numColor: Colors.blue);
             sum -= number;
           }
         },
       );
     }
     await Future.delayed(const Duration(seconds: 1));
-    state = const NumManager(num: 10000, sum: 0);
+    state = const NumManager(num: 10000, sum: 0, numColor: Colors.black);
   }
 
   void result() {
-    state = NumManager(num: 0, sum: sum);
+    state = NumManager(num: 0, sum: sum, numColor: Colors.black);
     sum = 0;
   }
 }
@@ -48,4 +51,3 @@ final numbersProvider =
     StateNotifierProvider.autoDispose<NumbersNotifier, NumManager>(
   (ref) => NumbersNotifier(),
 );
-final sumProvider = StateProvider<int>((ref) => 0);

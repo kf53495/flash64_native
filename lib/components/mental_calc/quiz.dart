@@ -27,7 +27,10 @@ class MentalCalcQuiz extends ConsumerWidget {
               visible: ref.watch(numbersProvider).num < 9999,
               child: Text(
                 ref.watch(numbersProvider).num.toString(),
-                style: const TextStyle(fontSize: 50),
+                style: TextStyle(
+                  fontSize: 50,
+                  color: ref.watch(numbersProvider).numColor,
+                ),
               ),
             ),
           ),
@@ -44,7 +47,9 @@ class MentalCalcQuiz extends ConsumerWidget {
                 ),
                 Text(
                   ref.watch(numbersProvider).sum.toString(),
-                  style: const TextStyle(fontSize: 30),
+                  style: const TextStyle(
+                    fontSize: 30,
+                  ),
                 ),
               ],
             ),
