@@ -34,25 +34,7 @@ class MentalCalcQuiz extends ConsumerWidget {
               ),
             ),
           ),
-          if (ref.watch(judgeProvider))
-            Column(
-              children: [
-                Text(
-                  'あなたの答え: ${ref.watch(answerNumProvider)}',
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const Text(
-                  '結果',
-                  style: TextStyle(fontSize: 20),
-                ),
-                Text(
-                  ref.watch(numbersProvider).sum.toString(),
-                  style: const TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-              ],
-            ),
+
           if (ref.watch(startButtonProvider))
             Center(
               child: ElevatedButton(
@@ -67,41 +49,64 @@ class MentalCalcQuiz extends ConsumerWidget {
                 child: const Text('START'),
               ),
             ),
+
           if (ref.watch(answerFieldProvider))
-            SizedBox(
-              width: 100,
-              height: 50,
-              child: TextField(
-                maxLength: 4,
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'[-0-9]'))
-                ],
-                onChanged: (value) {
-                  if (value.isEmpty || value == '-') {
-                    ref.read(answerNumProvider.notifier).state = 0;
-                  } else {
-                    ref.read(answerNumProvider.notifier).state =
-                        int.parse(value);
-                  }
-                  ref.read(answerFieldProvider.notifier).state = true;
-                },
-              ),
+            Column(
+              children: [
+                SizedBox(
+                  width: 100,
+                  height: 50,
+                  child: TextField(
+                    maxLength: 4,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[-0-9]'))
+                    ],
+                    onChanged: (value) {
+                      if (value.isEmpty || value == '-') {
+                        ref.read(answerNumProvider.notifier).state = 0;
+                      } else {
+                        ref.read(answerNumProvider.notifier).state =
+                            int.parse(value);
+                      }
+                      ref.read(answerFieldProvider.notifier).state = true;
+                    },
+                  ),
+                ),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      ref.read(numbersProvider.notifier).result();
+                      ref.read(answerFieldProvider.notifier).state = false;
+                      ref.read(judgeProvider.notifier).state = true;
+                    },
+                    child: const Text('答える'),
+                  ),
+                ),
+              ],
             ),
-          if (ref.watch(answerFieldProvider))
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  ref.read(numbersProvider.notifier).result();
-                  ref.read(answerFieldProvider.notifier).state = false;
-                  ref.read(judgeProvider.notifier).state = true;
-                },
-                child: const Text('答える'),
-              ),
-            ),
+
           if (ref.watch(judgeProvider)) // 正誤判定をして、正解と不正解で表示するものを分ける
             Column(
               children: [
+                Column(
+                  children: [
+                    Text(
+                      'あなたの答え: ${ref.watch(answerNumProvider)}',
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                    const Text(
+                      '結果',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Text(
+                      ref.watch(numbersProvider).sum.toString(),
+                      style: const TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                  ],
+                ),
                 if (ref.watch(numbersProvider).sum ==
                     ref.watch(answerNumProvider))
                   const Center(
@@ -118,18 +123,18 @@ class MentalCalcQuiz extends ConsumerWidget {
                       style: TextStyle(fontSize: 30),
                     ),
                   ),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      ref.read(numbersProvider.notifier).retry();
+                      ref.read(answerNumProvider.notifier).state = 0;
+                      ref.read(startButtonProvider.notifier).state = true;
+                      ref.read(judgeProvider.notifier).state = false;
+                    },
+                    child: const Text('リトライ'),
+                  ),
+                ),
               ],
-            ),
-          if (ref.watch(judgeProvider))
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  ref.read(numbersProvider.notifier).retry();
-                  ref.read(startButtonProvider.notifier).state = true;
-                  ref.read(judgeProvider.notifier).state = false;
-                },
-                child: const Text('リトライ'),
-              ),
             ),
 
           // 答えの値を監視して更新するための非表示のwidget
