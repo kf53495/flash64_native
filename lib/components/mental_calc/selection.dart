@@ -1,14 +1,5 @@
-import 'package:flash64_native/components/home.dart';
 import 'package:flash64_native/components/mental_calc/quiz.dart';
-import 'package:flash64_native/components/users/providers/user_info.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../global_components/appbar.dart';
-import 'package:flash64_native/components/memory64/providers/quiz_mode.dart';
-import 'package:flash64_native/components/memory64/providers/stone_provider.dart';
-import 'package:flash64_native/components/memory64/providers/time_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
 

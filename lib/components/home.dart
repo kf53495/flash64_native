@@ -7,7 +7,6 @@ import 'package:flash64_native/components/users/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'global_components/appbar.dart';
-import 'memory64/selection.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
