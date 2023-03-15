@@ -54,7 +54,11 @@ class MentalCalcQuiz extends ConsumerWidget {
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               onChanged: (value) {
-                ref.read(answerProvider.notifier).state = int.parse(value);
+                if (value != '') {
+                  ref.read(answerProvider.notifier).state = int.parse(value);
+                } else {
+                  ref.read(answerProvider.notifier).state = 0;
+                }
               },
             ),
           ),
