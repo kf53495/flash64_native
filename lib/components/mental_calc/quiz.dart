@@ -72,7 +72,7 @@ class MentalCalcQuiz extends ConsumerWidget {
               width: 100,
               height: 50,
               child: TextField(
-                maxLength: 3,
+                maxLength: 4,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'[-0-9]'))
