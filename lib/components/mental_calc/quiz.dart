@@ -18,10 +18,14 @@ class MentalCalcQuiz extends ConsumerWidget {
       appBar: const GlobalAppBar(),
       body: Column(
         children: [
-          Center(
+          Container(
+            height: 200,
+            width: double.infinity,
+            color: Colors.yellow,
+            alignment: Alignment.center,
             child: Text(
               ref.watch(numbersProvider).num.toString(),
-              style: const TextStyle(fontSize: 30),
+              style: const TextStyle(fontSize: 50),
             ),
           ),
           const Center(
