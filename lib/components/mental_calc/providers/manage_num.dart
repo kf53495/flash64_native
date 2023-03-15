@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @immutable
-class Sum {
-  const Sum({
+class NumManager {
+  const NumManager({
     required this.num,
     required this.sum,
   });
@@ -13,10 +13,10 @@ class Sum {
   final int sum;
 }
 
-class NumbersNotifier extends StateNotifier<Sum> {
-  NumbersNotifier() : super(const Sum(num: 0, sum: 0));
+class NumbersNotifier extends StateNotifier<NumManager> {
+  NumbersNotifier() : super(const NumManager(num: 0, sum: 0));
   List numbers = [];
-  int allOfSum = 0;
+  int sum = 0;
 
   void timer() async {
     for (int i = 0; i < 5; i++) {
@@ -25,11 +25,11 @@ class NumbersNotifier extends StateNotifier<Sum> {
         const Duration(seconds: 1),
         () {
           if (i.isEven) {
-            state = Sum(num: number, sum: 0);
-            allOfSum += number;
+            state = NumManager(num: number, sum: 0);
+            sum += number;
           } else {
-            state = Sum(num: number, sum: 0);
-            allOfSum -= number;
+            state = NumManager(num: number, sum: 0);
+            sum -= number;
           }
         },
       );
@@ -37,12 +37,13 @@ class NumbersNotifier extends StateNotifier<Sum> {
   }
 
   void result() {
-    state = Sum(num: 0, sum: allOfSum);
-    allOfSum = 0;
+    state = NumManager(num: 0, sum: sum);
+    sum = 0;
   }
 }
 
-final numbersProvider = StateNotifierProvider<NumbersNotifier, Sum>(
+final numbersProvider =
+    StateNotifierProvider.autoDispose<NumbersNotifier, NumManager>(
   (ref) => NumbersNotifier(),
 );
 final sumProvider = StateProvider<int>((ref) => 0);
