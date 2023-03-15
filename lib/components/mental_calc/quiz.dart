@@ -23,9 +23,12 @@ class MentalCalcQuiz extends ConsumerWidget {
             width: double.infinity,
             color: Colors.yellow,
             alignment: Alignment.center,
-            child: Text(
-              ref.watch(numbersProvider).num.toString(),
-              style: const TextStyle(fontSize: 50),
+            child: Visibility(
+              visible: ref.watch(numbersProvider).num < 9999,
+              child: Text(
+                ref.watch(numbersProvider).num.toString(),
+                style: const TextStyle(fontSize: 50),
+              ),
             ),
           ),
           if (ref.watch(judgeProvider))

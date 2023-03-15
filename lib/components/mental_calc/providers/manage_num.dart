@@ -14,7 +14,7 @@ class NumManager {
 }
 
 class NumbersNotifier extends StateNotifier<NumManager> {
-  NumbersNotifier() : super(const NumManager(num: 0, sum: 0));
+  NumbersNotifier() : super(const NumManager(num: 10000, sum: 0));
   List numbers = [];
   int sum = 0;
 
@@ -34,6 +34,8 @@ class NumbersNotifier extends StateNotifier<NumManager> {
         },
       );
     }
+    await Future.delayed(const Duration(seconds: 1));
+    state = const NumManager(num: 10000, sum: 0);
   }
 
   void result() {
