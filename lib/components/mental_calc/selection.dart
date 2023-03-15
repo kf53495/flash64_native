@@ -1,3 +1,4 @@
+import 'package:flash64_native/components/mental_calc/providers/setting.dart';
 import 'package:flash64_native/components/mental_calc/quiz.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -24,8 +25,10 @@ class MentalCalcSelection extends ConsumerWidget {
                     child: Text('$i'),
                   )
               ],
-              value: 12,
-              onChanged: (int? value) {},
+              value: ref.watch(settiingNumProvider),
+              onChanged: (int? value) {
+                ref.read(settiingNumProvider.notifier).state = value!;
+              },
             ),
           ),
           Center(

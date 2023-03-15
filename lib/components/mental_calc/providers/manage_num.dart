@@ -18,8 +18,8 @@ class NumbersNotifier extends StateNotifier<NumManager> {
   List numbers = [];
   int sum = 0;
 
-  void timer() async {
-    for (int i = 0; i < 5; i++) {
+  void timer(int times) async {
+    for (int i = 0; i < times; i++) {
       int number = Random().nextInt(18);
       await Future.delayed(
         const Duration(seconds: 1),

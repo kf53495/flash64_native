@@ -1,5 +1,6 @@
 import 'package:flash64_native/components/mental_calc/providers/answer_num.dart';
 import 'package:flash64_native/components/mental_calc/providers/manage_num.dart';
+import 'package:flash64_native/components/mental_calc/providers/setting.dart';
 import 'package:flash64_native/components/mental_calc/providers/visiblity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,7 +49,10 @@ class MentalCalcQuiz extends ConsumerWidget {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  ref.read(numbersProvider.notifier).timer();
+                  // settingNumProviderに保存された数値の回数だけ数字を表示する
+                  ref
+                      .read(numbersProvider.notifier)
+                      .timer(ref.read(settiingNumProvider));
                   ref.read(startButtonProvider.notifier).state = false;
                   ref.read(answerFieldProvider.notifier).state = true;
                 },
