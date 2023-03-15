@@ -120,6 +120,17 @@ class MentalCalcQuiz extends ConsumerWidget {
                   ),
               ],
             ),
+          if (ref.watch(judgeProvider))
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  ref.read(numbersProvider.notifier).retry();
+                  ref.read(startButtonProvider.notifier).state = true;
+                  ref.read(judgeProvider.notifier).state = false;
+                },
+                child: const Text('リトライ'),
+              ),
+            ),
 
           // 答えの値を監視して更新するための非表示のwidget
           Visibility(

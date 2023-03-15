@@ -45,6 +45,10 @@ class NumbersNotifier extends StateNotifier<NumManager> {
     state = NumManager(num: 0, sum: sum, numColor: Colors.black);
     sum = 0;
   }
+
+  void retry() {
+    state = const NumManager(num: 10000, sum: 0, numColor: Colors.black);
+  }
 }
 
 final numbersProvider =
