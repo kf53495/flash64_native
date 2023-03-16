@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flash64_native/components/global_components/firebase.dart';
 import 'package:flash64_native/components/mental_calc/providers/answer_num.dart';
 import 'package:flash64_native/components/mental_calc/providers/manage_num.dart';
 import 'package:flash64_native/components/mental_calc/providers/setting.dart';
@@ -14,6 +16,10 @@ class MentalCalcQuiz extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final setting = ref.watch(settiingNumProvider);
+    bool verification =
+        ref.watch(numbersProvider).sum == ref.watch(answerNumProvider);
+
     return Scaffold(
       appBar: const GlobalAppBar(),
       body: Column(
@@ -75,10 +81,11 @@ class MentalCalcQuiz extends ConsumerWidget {
                 ),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       ref.read(numbersProvider.notifier).result();
                       ref.read(answerFieldProvider.notifier).state = false;
                       ref.read(judgeProvider.notifier).state = true;
+                      answerProcess(setting.toString(), verification);
                     },
                     child: const Text('答える'),
                   ),
@@ -107,16 +114,14 @@ class MentalCalcQuiz extends ConsumerWidget {
                     ),
                   ],
                 ),
-                if (ref.watch(numbersProvider).sum ==
-                    ref.watch(answerNumProvider))
+                if (verification)
                   const Center(
                     child: Text(
                       '正解！',
                       style: TextStyle(fontSize: 30),
                     ),
                   ),
-                if (ref.watch(numbersProvider).sum !=
-                    ref.watch(answerNumProvider))
+                if (!verification)
                   const Center(
                     child: Text(
                       '残念！',
@@ -147,5 +152,17 @@ class MentalCalcQuiz extends ConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+// FireStoreに保存する記述
+
+void answerProcess(String setting, bool verification) async {
+  try {
+    db.collection('mental_calc').doc(setting).set({
+      'challenge': FieldValue.increment(1),
+    }, SetOptions(merge: true));
+  } catch (e) {
+    debugPrint(e.toString());
   }
 }
