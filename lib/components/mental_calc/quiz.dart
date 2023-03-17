@@ -40,7 +40,6 @@ class MentalCalcQuiz extends ConsumerWidget {
               ),
             ),
           ),
-
           if (ref.watch(startButtonProvider))
             Center(
               child: ElevatedButton(
@@ -55,7 +54,6 @@ class MentalCalcQuiz extends ConsumerWidget {
                 child: const Text('START'),
               ),
             ),
-
           if (ref.watch(answerFieldProvider))
             Column(
               children: [
@@ -92,7 +90,6 @@ class MentalCalcQuiz extends ConsumerWidget {
                 ),
               ],
             ),
-
           if (ref.watch(judgeProvider)) // 正誤判定をして、正解と不正解で表示するものを分ける
             Column(
               children: [
@@ -141,14 +138,6 @@ class MentalCalcQuiz extends ConsumerWidget {
                 ),
               ],
             ),
-
-          // 答えの値を監視して更新するための非表示のwidget
-          Visibility(
-            visible: false,
-            child: Center(
-              child: Text(ref.watch(answerNumProvider).toString()),
-            ),
-          ),
         ],
       ),
     );
@@ -156,12 +145,16 @@ class MentalCalcQuiz extends ConsumerWidget {
 }
 
 // FireStoreに保存する記述
-
 void answerProcess(String setting, bool verification) async {
   try {
-    db.collection('mental_calc').doc(setting).set({
+    await db.collection('mental_calc').doc(setting).set({
       'challenge': FieldValue.increment(1),
     }, SetOptions(merge: true));
+    if (verification) {
+      await db.collection('mental_calc').doc(setting).set({
+        'clear': FieldValue.increment(1),
+      }, SetOptions(merge: true));
+    }
   } catch (e) {
     debugPrint(e.toString());
   }
