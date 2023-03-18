@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flash64_native/components/global_components/firebase.dart';
 import 'package:flash64_native/components/home.dart';
 import 'package:flash64_native/components/users/providers/user_info.dart';
 import 'package:flash64_native/components/users/providers/user_input.dart';

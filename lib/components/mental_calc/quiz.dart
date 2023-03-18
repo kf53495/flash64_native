@@ -17,6 +17,7 @@ class MentalCalcQuiz extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final setting = ref.watch(settiingNumProvider);
+    final uid = ref.watch(currentUserProvider);
     bool verification =
         ref.watch(numbersProvider).sum == ref.watch(answerNumProvider);
 
@@ -83,7 +84,7 @@ class MentalCalcQuiz extends ConsumerWidget {
                       ref.read(numbersProvider.notifier).result();
                       ref.read(answerFieldProvider.notifier).state = false;
                       ref.read(judgeProvider.notifier).state = true;
-                      answerProcess(setting.toString(), verification);
+                      answerProcess(setting.toString(), uid, verification);
                     },
                     child: const Text('答える'),
                   ),
@@ -145,15 +146,20 @@ class MentalCalcQuiz extends ConsumerWidget {
 }
 
 // FireStoreに保存する記述
-void answerProcess(String setting, bool verification) async {
+void answerProcess(String setting, String? uid, bool verification) async {
   try {
-    await db.collection('mental_calc').doc(setting).set({
-      'challenge': FieldValue.increment(1),
-    }, SetOptions(merge: true));
-    if (verification) {
-      await db.collection('mental_calc').doc(setting).set({
-        'clear': FieldValue.increment(1),
+    if (uid != null) {
+      await db.doc(uid).collection('mental_calc').doc(setting).set({
+        'challenge': FieldValue.increment(1),
       }, SetOptions(merge: true));
+      if (verification) {
+        await db.doc(uid).collection('mental_calc').doc(setting).set({
+          'clear': FieldValue.increment(1),
+        }, SetOptions(merge: true));
+      }
+    }
+    if (uid == null) {
+      debugPrint('ログアウトちゅ');
     }
   } catch (e) {
     debugPrint(e.toString());
