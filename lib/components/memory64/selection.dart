@@ -19,7 +19,6 @@ class Memory64Selection extends ConsumerWidget {
       body: Column(
         children: [
           SizedBox(
-            width: 200,
             child: DropdownButton<int>(
               items: [
                 for (int i = 0; i < 5; i++)
@@ -35,7 +34,6 @@ class Memory64Selection extends ConsumerWidget {
             ),
           ),
           SizedBox(
-            width: 200,
             child: DropdownButton<String>(
               items: const [
                 DropdownMenuItem(
