@@ -9,7 +9,7 @@ class GlobalAppBar extends HookWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('ぐろーばるあっぷばーです'),
+      title: const Text('AppBar'),
     );
   }
 }
