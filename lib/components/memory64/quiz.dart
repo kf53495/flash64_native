@@ -1,8 +1,10 @@
+import 'package:flash64_native/components/global_components/firebase.dart';
 import 'package:flash64_native/components/memory64/providers/board_size.dart';
 import 'package:flash64_native/components/memory64/providers/quiz_mode.dart';
 import 'package:flash64_native/components/memory64/providers/select_stone.dart';
 import 'package:flash64_native/components/memory64/providers/time_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
 import 'providers/stone_provider.dart';
@@ -15,9 +17,12 @@ class Memory64Quiz extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final uid = ref.watch(currentUserProvider);
     final int boardSize = ref.watch(boardSizeProvider);
     var buttonVisiblities = ref.watch(buttonVisiblityProvider);
     final time = int.parse(ref.watch(timeProvider));
+    final String verification =
+        '${ref.watch(stoneProvider.notifier).countCorrectStones(ref.watch(quizModeProvider))} / ${boardSize * boardSize}';
     final readStoneProvider = ref.read(stoneProvider.notifier);
     final readButtonProvider = ref.read(buttonVisiblityProvider.notifier);
     final List<StoneInformation> boxColors = ref.watch(stoneProvider);
@@ -132,6 +137,8 @@ class Memory64Quiz extends ConsumerWidget {
                   readStoneProvider
                       .checkUntappedStones(ref.watch(quizModeProvider));
                   readStoneProvider.displayResult();
+                  answerProcess(ref.read(quizModeProvider), uid,
+                      ref.read(timeProvider), true);
                 },
               ),
             ),
@@ -145,8 +152,8 @@ class Memory64Quiz extends ConsumerWidget {
                     child: Text('正解数: '),
                   ),
                   Center(
-                    child: Text(
-                        '${ref.watch(stoneProvider.notifier).countCorrectStones(ref.watch(quizModeProvider))} / ${boardSize * boardSize}'),
+                    child: Text(verification),
+                    // ('${ref.watch(stoneProvider.notifier).countCorrectStones(ref.watch(quizModeProvider))} / ${boardSize * boardSize}'),
                   ),
                   Center(
                     child: Text(' ${ref.watch(quizModeProvider)}'),
@@ -277,5 +284,30 @@ bool _includeEmpty(mode) {
     return true;
   } else {
     return false;
+  }
+}
+
+// FireStoreに保存する記述
+void answerProcess(
+    String mode, String? uid, String time, bool verification) async {
+  try {
+    if (uid != null) {
+      await db.doc(uid).collection('memory64').doc('black_only').set({
+        '1': {
+          'challenge': FieldValue.increment(1),
+          'clear': FieldValue.increment(1),
+        },
+      });
+      if (verification) {
+        await db.doc(uid).collection('memory64').doc('black_only').set({
+          'clear': FieldValue.increment(1),
+        }, SetOptions(merge: true));
+      }
+    }
+    if (uid == null) {
+      debugPrint('ログアウトちゅ');
+    }
+  } catch (e) {
+    debugPrint(e.toString());
   }
 }
