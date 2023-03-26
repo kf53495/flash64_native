@@ -290,11 +290,15 @@ Future<void> answerProcess(String mode, String? uid, String timeLimit,
   try {
     debugPrint(verification.toString());
     if (uid != null) {
-      await db.doc(uid).collection('memory64').doc(mode).set(
+      await db
+          .doc(uid)
+          .collection('memory64')
+          .doc(mode)
+          .collection((boardSize * boardSize).toString())
+          .doc(timeLimit)
+          .set(
         {
-          timeLimit: {
-            'challenge': FieldValue.increment(1),
-          },
+          'challenge': FieldValue.increment(1),
         },
         SetOptions(merge: true),
       );
