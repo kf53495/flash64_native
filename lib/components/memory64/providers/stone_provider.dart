@@ -64,20 +64,6 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
     ];
   }
 
-  // void hideAllStones() {
-  //   detectTimer = false;
-  //   state = [
-  //     for (final stone in state)
-  //       StoneInformation(
-  //         id: stone.id,
-  //         stoneColor: stone.stoneColor,
-  //         visiblity: false,
-  //         correctCount: false,
-  //         boxColor: Colors.lightGreen,
-  //       )
-  //   ];
-  // }
-
   void hideAllStones(String mode) {
     detectTimer = false;
     state = [
@@ -86,23 +72,13 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
           id: stone.id,
           stoneColor: stone.stoneColor,
           visiblity: false,
-          correctCount: checked(mode, stone.stoneColor),
+          correctCount: checkBlackOrWhite(mode, stone.stoneColor),
           boxColor: Colors.lightGreen,
         )
     ];
   }
 
-  // 石を非表示にする際に、タップなしで正解になるものをあらかじめ正解としてカウントするための関数
-  bool checked(String mode, String stoneColor) {
-    if (mode == 'onlyBlack' && stoneColor == 'white') {
-      return true;
-    } else if (mode == 'onlyWhite' && stoneColor == 'black') {
-      return true;
-    }
-    return false;
-  }
-
-  void hideAllStonesWithTimer(time) async {
+  void hideAllStonesWithTimer(String mode, int time) async {
     if (time != 0) {
       detectTimer = true;
       await Future.delayed(
@@ -115,7 +91,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
                   id: stone.id,
                   stoneColor: stone.stoneColor,
                   visiblity: false,
-                  correctCount: false,
+                  correctCount: checkBlackOrWhite(mode, stone.stoneColor),
                   boxColor: Colors.lightGreen,
                 )
             ];
@@ -124,6 +100,18 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
         },
       );
     }
+  }
+
+  // 石を非表示にする際に、タップなしで正解になるものをあらかじめ正解としてカウントするための関数
+  bool checkBlackOrWhite(String mode, String stoneColor) {
+    if (mode == 'onlyBlack' && stoneColor == 'white') {
+      return true;
+    } else if (mode == 'onlyWhite' && stoneColor == 'black') {
+      return true;
+    } else if (mode == 'empty' && stoneColor == 'empty') {
+      return true;
+    }
+    return false;
   }
 
   void displayStone(String mode, String emptyMode, int stoneId) {
@@ -152,42 +140,6 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
       return true;
     }
     return false;
-  }
-
-  // Answer時に、非表示になっている石の正誤を確かめる
-  Future<void> checkUntappedStones(String mode) async {
-    state = [
-      for (final stone in state)
-        if (stone.visiblity == false)
-          if (mode == 'onlyBlack' && stone.stoneColor == 'white')
-            StoneInformation(
-              id: stone.id,
-              stoneColor: stone.stoneColor,
-              visiblity: true,
-              correctCount: true,
-              boxColor: Colors.lightGreen,
-            )
-          else if (mode == 'onlyWhite' && stone.stoneColor == 'black')
-            StoneInformation(
-              id: stone.id,
-              stoneColor: stone.stoneColor,
-              visiblity: true,
-              correctCount: true,
-              boxColor: Colors.lightGreen,
-            )
-          else if (stone.stoneColor == 'empty')
-            StoneInformation(
-              id: stone.id,
-              stoneColor: stone.stoneColor,
-              visiblity: true,
-              correctCount: true,
-              boxColor: Colors.lightGreen,
-            )
-          else
-            stone
-        else
-          stone
-    ];
   }
 
   void displayResult() {

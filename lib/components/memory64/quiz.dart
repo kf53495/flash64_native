@@ -20,7 +20,7 @@ class Memory64Quiz extends ConsumerWidget {
     final uid = ref.watch(currentUserProvider);
     final int boardSize = ref.watch(boardSizeProvider);
     var buttonVisiblities = ref.watch(buttonVisiblityProvider);
-    final time = int.parse(ref.watch(timeProvider));
+    final int time = int.parse(ref.watch(timeProvider));
     bool veri = ref.watch(correctCountProvider) == boardSize * boardSize;
     final readStoneProvider = ref.read(stoneProvider.notifier);
     final readButtonProvider = ref.read(buttonVisiblityProvider.notifier);
@@ -107,7 +107,8 @@ class Memory64Quiz extends ConsumerWidget {
                   readButtonProvider.pushStartButton();
                   readStoneProvider.displayAllStones();
                   readButtonProvider.startTimer(time);
-                  readStoneProvider.hideAllStonesWithTimer(time);
+                  readStoneProvider.hideAllStonesWithTimer(
+                      ref.read(quizModeProvider), time);
                 },
               ),
             ),
@@ -133,8 +134,6 @@ class Memory64Quiz extends ConsumerWidget {
                 onPressed: () async {
                   debugPrint(ref.read(correctCountProvider).toString());
                   readButtonProvider.pushAnswerButton();
-                  // await readStoneProvider
-                  //     .checkUntappedStones(ref.read(quizModeProvider));
                   readStoneProvider.displayResult();
                   await answerProcess(ref.read(quizModeProvider), uid,
                       ref.read(timeProvider), veri, boardSize);
