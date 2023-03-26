@@ -119,7 +119,6 @@ class Memory64Quiz extends ConsumerWidget {
               child: ElevatedButton(
                 child: const Text('おぼえた！'),
                 onPressed: () {
-                  debugPrint(ref.read(correctCountProvider).toString());
                   readButtonProvider.pushMemorizedButton();
                   readStoneProvider.hideAllStones(ref.read(quizModeProvider));
                 },
@@ -291,7 +290,7 @@ Future<void> answerProcess(String mode, String? uid, String timeLimit,
   try {
     debugPrint(verification.toString());
     if (uid != null) {
-      await db.doc(uid).collection('memory64').doc('black_only').set(
+      await db.doc(uid).collection('memory64').doc(mode).set(
         {
           timeLimit: {
             'challenge': FieldValue.increment(1),
@@ -300,7 +299,7 @@ Future<void> answerProcess(String mode, String? uid, String timeLimit,
         SetOptions(merge: true),
       );
       if (verification) {
-        await db.doc(uid).collection('memory64').doc('black_only').set(
+        await db.doc(uid).collection('memory64').doc(mode).set(
           {
             timeLimit: {
               'clear': FieldValue.increment(1),
