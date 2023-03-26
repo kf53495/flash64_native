@@ -21,8 +21,7 @@ class Memory64Quiz extends ConsumerWidget {
     final int boardSize = ref.watch(boardSizeProvider);
     var buttonVisiblities = ref.watch(buttonVisiblityProvider);
     final time = int.parse(ref.watch(timeProvider));
-    final String verification =
-        '${ref.watch(stoneProvider.notifier).countCorrectStones(ref.watch(quizModeProvider))} / ${boardSize * boardSize}';
+    bool veri = ref.watch(correctCountProvider) == boardSize * boardSize;
     final readStoneProvider = ref.read(stoneProvider.notifier);
     final readButtonProvider = ref.read(buttonVisiblityProvider.notifier);
     final List<StoneInformation> boxColors = ref.watch(stoneProvider);
@@ -119,8 +118,9 @@ class Memory64Quiz extends ConsumerWidget {
               child: ElevatedButton(
                 child: const Text('おぼえた！'),
                 onPressed: () {
+                  debugPrint(ref.read(correctCountProvider).toString());
                   readButtonProvider.pushMemorizedButton();
-                  readStoneProvider.hideAllStones();
+                  readStoneProvider.hideAllStones(ref.read(quizModeProvider));
                 },
               ),
             ),
@@ -130,15 +130,14 @@ class Memory64Quiz extends ConsumerWidget {
               visible: buttonVisiblities.answerButton,
               child: ElevatedButton(
                 child: const Text('Answer'),
-                onPressed: () {
-                  readStoneProvider
-                      .countCorrectStones(ref.read(quizModeProvider));
+                onPressed: () async {
+                  debugPrint(ref.read(correctCountProvider).toString());
                   readButtonProvider.pushAnswerButton();
-                  readStoneProvider
-                      .checkUntappedStones(ref.watch(quizModeProvider));
+                  // await readStoneProvider
+                  //     .checkUntappedStones(ref.read(quizModeProvider));
                   readStoneProvider.displayResult();
-                  answerProcess(ref.read(quizModeProvider), uid,
-                      ref.read(timeProvider), true);
+                  await answerProcess(ref.read(quizModeProvider), uid,
+                      ref.read(timeProvider), veri, boardSize);
                 },
               ),
             ),
@@ -152,8 +151,8 @@ class Memory64Quiz extends ConsumerWidget {
                     child: Text('正解数: '),
                   ),
                   Center(
-                    child: Text(verification),
-                    // ('${ref.watch(stoneProvider.notifier).countCorrectStones(ref.watch(quizModeProvider))} / ${boardSize * boardSize}'),
+                    child: Text(
+                        '${ref.watch(stoneProvider.notifier).countCorrectStones()} / ${boardSize * boardSize}'),
                   ),
                   Center(
                     child: Text(' ${ref.watch(quizModeProvider)}'),
@@ -288,20 +287,28 @@ bool _includeEmpty(mode) {
 }
 
 // FireStoreに保存する記述
-void answerProcess(
-    String mode, String? uid, String time, bool verification) async {
+Future<void> answerProcess(String mode, String? uid, String timeLimit,
+    bool verification, int boardSize) async {
   try {
+    debugPrint(verification.toString());
     if (uid != null) {
-      await db.doc(uid).collection('memory64').doc('black_only').set({
-        '1': {
-          'challenge': FieldValue.increment(1),
-          'clear': FieldValue.increment(1),
+      await db.doc(uid).collection('memory64').doc('black_only').set(
+        {
+          timeLimit: {
+            'challenge': FieldValue.increment(1),
+          },
         },
-      });
+        SetOptions(merge: true),
+      );
       if (verification) {
-        await db.doc(uid).collection('memory64').doc('black_only').set({
-          'clear': FieldValue.increment(1),
-        }, SetOptions(merge: true));
+        await db.doc(uid).collection('memory64').doc('black_only').set(
+          {
+            timeLimit: {
+              'clear': FieldValue.increment(1),
+            },
+          },
+          SetOptions(merge: true),
+        );
       }
     }
     if (uid == null) {

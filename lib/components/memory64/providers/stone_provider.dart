@@ -64,7 +64,21 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
     ];
   }
 
-  void hideAllStones() {
+  // void hideAllStones() {
+  //   detectTimer = false;
+  //   state = [
+  //     for (final stone in state)
+  //       StoneInformation(
+  //         id: stone.id,
+  //         stoneColor: stone.stoneColor,
+  //         visiblity: false,
+  //         correctCount: false,
+  //         boxColor: Colors.lightGreen,
+  //       )
+  //   ];
+  // }
+
+  void hideAllStones(String mode) {
     detectTimer = false;
     state = [
       for (final stone in state)
@@ -72,10 +86,20 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
           id: stone.id,
           stoneColor: stone.stoneColor,
           visiblity: false,
-          correctCount: false,
+          correctCount: checked(mode, stone.stoneColor),
           boxColor: Colors.lightGreen,
         )
     ];
+  }
+
+  // 石を非表示にする際に、タップなしで正解になるものをあらかじめ正解としてカウントするための関数
+  bool checked(String mode, String stoneColor) {
+    if (mode == 'onlyBlack' && stoneColor == 'white') {
+      return true;
+    } else if (mode == 'onlyWhite' && stoneColor == 'black') {
+      return true;
+    }
+    return false;
   }
 
   void hideAllStonesWithTimer(time) async {
@@ -131,7 +155,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
   }
 
   // Answer時に、非表示になっている石の正誤を確かめる
-  void checkUntappedStones(String mode) {
+  Future<void> checkUntappedStones(String mode) async {
     state = [
       for (final stone in state)
         if (stone.visiblity == false)
@@ -189,7 +213,7 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
   }
 
   // 正解数を表示する関数
-  int countCorrectStones(mode) {
+  int countCorrectStones() {
     int count = 0;
     for (final stone in state) {
       if (stone.correctCount) count++;
@@ -201,4 +225,18 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
 final stoneProvider =
     StateNotifierProvider<StoneNotifier, List<StoneInformation>>(
   (ref) => StoneNotifier(),
+);
+
+// 正解数を監視するプロバイダー
+final correctCountProvider = StateProvider<int>(
+  (ref) {
+    int countX = 0;
+    final stoneInformation = ref.watch(stoneProvider);
+    for (final stone in stoneInformation) {
+      if (stone.correctCount == true) {
+        countX++;
+      }
+    }
+    return countX;
+  },
 );
