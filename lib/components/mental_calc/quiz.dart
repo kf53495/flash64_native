@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flash64_native/components/global_components/firebase.dart';
 import 'package:flash64_native/components/mental_calc/providers/answer_num.dart';
 import 'package:flash64_native/components/mental_calc/providers/manage_num.dart';
 import 'package:flash64_native/components/mental_calc/providers/setting.dart';
@@ -14,6 +16,11 @@ class MentalCalcQuiz extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final setting = ref.watch(settiingNumProvider);
+    final uid = ref.watch(currentUserProvider);
+    bool verification =
+        ref.watch(numbersProvider).sum == ref.watch(answerNumProvider);
+
     return Scaffold(
       appBar: const GlobalAppBar(),
       body: Column(
@@ -34,7 +41,6 @@ class MentalCalcQuiz extends ConsumerWidget {
               ),
             ),
           ),
-
           if (ref.watch(startButtonProvider))
             Center(
               child: ElevatedButton(
@@ -49,7 +55,6 @@ class MentalCalcQuiz extends ConsumerWidget {
                 child: const Text('START'),
               ),
             ),
-
           if (ref.watch(answerFieldProvider))
             Column(
               children: [
@@ -75,17 +80,17 @@ class MentalCalcQuiz extends ConsumerWidget {
                 ),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       ref.read(numbersProvider.notifier).result();
                       ref.read(answerFieldProvider.notifier).state = false;
                       ref.read(judgeProvider.notifier).state = true;
+                      answerProcess(setting.toString(), uid, verification);
                     },
                     child: const Text('答える'),
                   ),
                 ),
               ],
             ),
-
           if (ref.watch(judgeProvider)) // 正誤判定をして、正解と不正解で表示するものを分ける
             Column(
               children: [
@@ -107,16 +112,14 @@ class MentalCalcQuiz extends ConsumerWidget {
                     ),
                   ],
                 ),
-                if (ref.watch(numbersProvider).sum ==
-                    ref.watch(answerNumProvider))
+                if (verification)
                   const Center(
                     child: Text(
                       '正解！',
                       style: TextStyle(fontSize: 30),
                     ),
                   ),
-                if (ref.watch(numbersProvider).sum !=
-                    ref.watch(answerNumProvider))
+                if (!verification)
                   const Center(
                     child: Text(
                       '残念！',
@@ -136,16 +139,29 @@ class MentalCalcQuiz extends ConsumerWidget {
                 ),
               ],
             ),
-
-          // 答えの値を監視して更新するための非表示のwidget
-          Visibility(
-            visible: false,
-            child: Center(
-              child: Text(ref.watch(answerNumProvider).toString()),
-            ),
-          ),
         ],
       ),
     );
+  }
+}
+
+// FireStoreに保存する記述
+void answerProcess(String setting, String? uid, bool verification) async {
+  try {
+    if (uid != null) {
+      await db.doc(uid).collection('mental_calc').doc(setting).set({
+        'challenge': FieldValue.increment(1),
+      }, SetOptions(merge: true));
+      if (verification) {
+        await db.doc(uid).collection('mental_calc').doc(setting).set({
+          'clear': FieldValue.increment(1),
+        }, SetOptions(merge: true));
+      }
+    }
+    if (uid == null) {
+      debugPrint('ログアウトちゅ');
+    }
+  } catch (e) {
+    debugPrint(e.toString());
   }
 }

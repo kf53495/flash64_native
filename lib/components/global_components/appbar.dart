@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class GlobalAppBar extends HookWidget with PreferredSizeWidget {
+class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
   const GlobalAppBar({Key? key}) : super(key: key);
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -9,7 +9,7 @@ class GlobalAppBar extends HookWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('ぐろーばるあっぷばーです'),
+      title: const Text('AppBar'),
     );
   }
 }

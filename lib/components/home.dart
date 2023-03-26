@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash64_native/components/global_components/firebase.dart';
 import 'package:flash64_native/components/select_quiz.dart';
 import 'package:flash64_native/components/users/login.dart';
 import 'package:flash64_native/components/users/my_page.dart';
@@ -79,6 +80,7 @@ class HomePage extends ConsumerWidget {
                 child: const Text('ログアウト'),
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();
+                  ref.read(currentUserProvider.notifier).state = null;
                   ref.read(userInformationProvider.notifier).state = '';
                   if (context.mounted) {
                     await Navigator.of(context).pushReplacement(

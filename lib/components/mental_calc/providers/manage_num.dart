@@ -38,15 +38,15 @@ class NumbersNotifier extends StateNotifier<NumManager> {
       );
     }
     await Future.delayed(const Duration(seconds: 1));
-    state = const NumManager(num: 10000, sum: 0, numColor: Colors.black);
+    state = NumManager(num: 10000, sum: sum, numColor: Colors.black);
   }
 
   void result() {
     state = NumManager(num: 0, sum: sum, numColor: Colors.black);
-    sum = 0;
   }
 
   void retry() {
+    sum = 0;
     state = const NumManager(num: 10000, sum: 0, numColor: Colors.black);
   }
 }

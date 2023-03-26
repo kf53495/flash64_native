@@ -1,8 +1,10 @@
+import 'package:flash64_native/components/global_components/firebase.dart';
 import 'package:flash64_native/components/memory64/providers/board_size.dart';
 import 'package:flash64_native/components/memory64/providers/quiz_mode.dart';
 import 'package:flash64_native/components/memory64/providers/select_stone.dart';
 import 'package:flash64_native/components/memory64/providers/time_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../global_components/appbar.dart';
 import 'providers/stone_provider.dart';
@@ -15,9 +17,11 @@ class Memory64Quiz extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final uid = ref.watch(currentUserProvider);
     final int boardSize = ref.watch(boardSizeProvider);
     var buttonVisiblities = ref.watch(buttonVisiblityProvider);
-    final time = int.parse(ref.watch(timeProvider));
+    final int time = int.parse(ref.watch(timeProvider));
+    bool veri = ref.read(correctCountProvider) == boardSize * boardSize;
     final readStoneProvider = ref.read(stoneProvider.notifier);
     final readButtonProvider = ref.read(buttonVisiblityProvider.notifier);
     final List<StoneInformation> boxColors = ref.watch(stoneProvider);
@@ -103,7 +107,8 @@ class Memory64Quiz extends ConsumerWidget {
                   readButtonProvider.pushStartButton();
                   readStoneProvider.displayAllStones();
                   readButtonProvider.startTimer(time);
-                  readStoneProvider.hideAllStonesWithTimer(time);
+                  readStoneProvider.hideAllStonesWithTimer(
+                      ref.read(quizModeProvider), time);
                 },
               ),
             ),
@@ -115,7 +120,7 @@ class Memory64Quiz extends ConsumerWidget {
                 child: const Text('おぼえた！'),
                 onPressed: () {
                   readButtonProvider.pushMemorizedButton();
-                  readStoneProvider.hideAllStones();
+                  readStoneProvider.hideAllStones(ref.read(quizModeProvider));
                 },
               ),
             ),
@@ -125,13 +130,12 @@ class Memory64Quiz extends ConsumerWidget {
               visible: buttonVisiblities.answerButton,
               child: ElevatedButton(
                 child: const Text('Answer'),
-                onPressed: () {
-                  readStoneProvider
-                      .countCorrectStones(ref.read(quizModeProvider));
+                onPressed: () async {
                   readButtonProvider.pushAnswerButton();
-                  readStoneProvider
-                      .checkUntappedStones(ref.watch(quizModeProvider));
                   readStoneProvider.displayResult();
+                  await answerProcess(ref.read(quizModeProvider), uid,
+                      ref.read(timeProvider), veri, boardSize);
+                  ref.read(retryButtonProvider.notifier).state = true;
                 },
               ),
             ),
@@ -146,7 +150,7 @@ class Memory64Quiz extends ConsumerWidget {
                   ),
                   Center(
                     child: Text(
-                        '${ref.watch(stoneProvider.notifier).countCorrectStones(ref.watch(quizModeProvider))} / ${boardSize * boardSize}'),
+                        '${ref.watch(correctCountProvider)} / ${boardSize * boardSize}'),
                   ),
                   Center(
                     child: Text(' ${ref.watch(quizModeProvider)}'),
@@ -155,6 +159,18 @@ class Memory64Quiz extends ConsumerWidget {
               ),
             ),
           ),
+          if (ref.watch(retryButtonProvider))
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  ref.read(retryButtonProvider.notifier).state = false;
+                  readStoneProvider.initStones(
+                      boardSize * boardSize, ref.read(quizModeProvider));
+                  readButtonProvider.pushRetryButton();
+                },
+                child: const Text('リトライ'),
+              ),
+            ),
           Visibility(
             visible: _includeEmpty(ref.watch(quizModeProvider)),
             child: Center(
@@ -277,5 +293,45 @@ bool _includeEmpty(mode) {
     return true;
   } else {
     return false;
+  }
+}
+
+// FireStoreに保存する記述
+Future<void> answerProcess(String mode, String? uid, String timeLimit,
+    bool verification, int boardSize) async {
+  try {
+    if (uid != null) {
+      await db
+          .doc(uid)
+          .collection('memory64')
+          .doc(mode)
+          .collection((boardSize * boardSize).toString())
+          .doc(timeLimit)
+          .set(
+        {
+          'challenge': FieldValue.increment(1),
+        },
+        SetOptions(merge: true),
+      );
+      if (verification) {
+        await db
+            .doc(uid)
+            .collection('memory64')
+            .doc(mode)
+            .collection((boardSize * boardSize).toString())
+            .doc(timeLimit)
+            .set(
+          {
+            'clear': FieldValue.increment(1),
+          },
+          SetOptions(merge: true),
+        );
+      }
+    }
+    if (uid == null) {
+      debugPrint('ログアウト中');
+    }
+  } catch (e) {
+    debugPrint(e.toString());
   }
 }
