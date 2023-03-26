@@ -71,9 +71,19 @@ class ButtonVisiblityNotifier extends StateNotifier<ButtonStates> {
       answerButton: false,
     );
   }
+
+  void pushRetryButton() {
+    state = const ButtonStates(
+      startButton: true,
+      memorizedButton: false,
+      answerButton: false,
+    );
+  }
 }
 
 final buttonVisiblityProvider =
     StateNotifierProvider.autoDispose<ButtonVisiblityNotifier, ButtonStates>(
   (ref) => ButtonVisiblityNotifier(),
 );
+
+final retryButtonProvider = StateProvider<bool>((ref) => false);

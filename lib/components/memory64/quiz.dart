@@ -21,7 +21,7 @@ class Memory64Quiz extends ConsumerWidget {
     final int boardSize = ref.watch(boardSizeProvider);
     var buttonVisiblities = ref.watch(buttonVisiblityProvider);
     final int time = int.parse(ref.watch(timeProvider));
-    bool veri = ref.watch(correctCountProvider) == boardSize * boardSize;
+    bool veri = ref.read(correctCountProvider) == boardSize * boardSize;
     final readStoneProvider = ref.read(stoneProvider.notifier);
     final readButtonProvider = ref.read(buttonVisiblityProvider.notifier);
     final List<StoneInformation> boxColors = ref.watch(stoneProvider);
@@ -131,11 +131,11 @@ class Memory64Quiz extends ConsumerWidget {
               child: ElevatedButton(
                 child: const Text('Answer'),
                 onPressed: () async {
-                  debugPrint(ref.read(correctCountProvider).toString());
                   readButtonProvider.pushAnswerButton();
                   readStoneProvider.displayResult();
                   await answerProcess(ref.read(quizModeProvider), uid,
                       ref.read(timeProvider), veri, boardSize);
+                  ref.read(retryButtonProvider.notifier).state = true;
                 },
               ),
             ),
@@ -150,7 +150,7 @@ class Memory64Quiz extends ConsumerWidget {
                   ),
                   Center(
                     child: Text(
-                        '${ref.watch(stoneProvider.notifier).countCorrectStones()} / ${boardSize * boardSize}'),
+                        '${ref.watch(correctCountProvider)} / ${boardSize * boardSize}'),
                   ),
                   Center(
                     child: Text(' ${ref.watch(quizModeProvider)}'),
@@ -159,6 +159,18 @@ class Memory64Quiz extends ConsumerWidget {
               ),
             ),
           ),
+          if (ref.watch(retryButtonProvider))
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  ref.read(retryButtonProvider.notifier).state = false;
+                  readStoneProvider.initStones(
+                      boardSize * boardSize, ref.read(quizModeProvider));
+                  readButtonProvider.pushRetryButton();
+                },
+                child: const Text('リトライ'),
+              ),
+            ),
           Visibility(
             visible: _includeEmpty(ref.watch(quizModeProvider)),
             child: Center(
@@ -288,7 +300,6 @@ bool _includeEmpty(mode) {
 Future<void> answerProcess(String mode, String? uid, String timeLimit,
     bool verification, int boardSize) async {
   try {
-    debugPrint(verification.toString());
     if (uid != null) {
       await db
           .doc(uid)

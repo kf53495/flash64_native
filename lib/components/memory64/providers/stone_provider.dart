@@ -163,15 +163,6 @@ class StoneNotifier extends StateNotifier<List<StoneInformation>> {
           ),
     ];
   }
-
-  // 正解数を表示する関数
-  int countCorrectStones() {
-    int count = 0;
-    for (final stone in state) {
-      if (stone.correctCount) count++;
-    }
-    return count;
-  }
 }
 
 final stoneProvider =
