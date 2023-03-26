@@ -303,18 +303,22 @@ Future<void> answerProcess(String mode, String? uid, String timeLimit,
         SetOptions(merge: true),
       );
       if (verification) {
-        await db.doc(uid).collection('memory64').doc(mode).set(
+        await db
+            .doc(uid)
+            .collection('memory64')
+            .doc(mode)
+            .collection((boardSize * boardSize).toString())
+            .doc(timeLimit)
+            .set(
           {
-            timeLimit: {
-              'clear': FieldValue.increment(1),
-            },
+            'clear': FieldValue.increment(1),
           },
           SetOptions(merge: true),
         );
       }
     }
     if (uid == null) {
-      debugPrint('ログアウトちゅ');
+      debugPrint('ログアウト中');
     }
   } catch (e) {
     debugPrint(e.toString());
