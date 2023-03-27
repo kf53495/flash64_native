@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flash64_native/components/global_components/firebase.dart';
+import 'package:flash64_native/components/users/providers/mypage_provider.dart';
 import 'package:flash64_native/components/users/providers/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -10,7 +13,10 @@ class MyPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final uid = ref.watch(currentUserProvider);
     final username = ref.watch(userInformationProvider);
+    final db = ref.watch(dbProvider);
+    final querySnapshot = db.doc(uid).collection('mental_calc').doc('3').get();
     return Scaffold(
       appBar: const GlobalAppBar(),
       body: Column(
@@ -31,12 +37,23 @@ class MyPage extends ConsumerWidget {
               ),
             ),
           ),
-          const SizedBox(
-            height: 200,
-            width: 200,
+          Center(
+            child: Text(ref.watch(myPageProvider).toString()),
           )
         ],
       ),
     );
   }
 }
+
+void a(uid) async {
+  final querySnapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .doc(uid)
+      .collection('mental_calc')
+      .doc('3')
+      .get();
+  debugPrint(querySnapshot.toString());
+}
+
+// users memory64(colle) onlyBlack(doc) 16(colle) 2(doc){challenge, clear}
