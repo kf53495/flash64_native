@@ -38,7 +38,10 @@ class MyPage extends ConsumerWidget {
             ),
           ),
           Center(
-            child: Text(ref.watch(myPageProvider).toString()),
+            child: Text('挑戦数: ${ref.watch(mentalCalcProvider)[0]}'),
+          ),
+          Center(
+            child: Text('クリア${ref.watch(mentalCalcProvider)[1]}'),
           )
         ],
       ),

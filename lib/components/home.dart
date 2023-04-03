@@ -103,7 +103,7 @@ class HomePage extends ConsumerWidget {
               child: ElevatedButton(
                 child: const Text('マイページ'),
                 onPressed: () {
-                  ref.read(myPageProvider.notifier).setData(uid);
+                  ref.read(mentalCalcProvider.notifier).setData(uid);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
