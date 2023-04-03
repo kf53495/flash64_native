@@ -3,6 +3,7 @@ import 'package:flash64_native/components/global_components/firebase.dart';
 import 'package:flash64_native/components/select_quiz.dart';
 import 'package:flash64_native/components/users/login.dart';
 import 'package:flash64_native/components/users/my_page.dart';
+import 'package:flash64_native/components/users/providers/mypage_provider.dart';
 import 'package:flash64_native/components/users/providers/user_info.dart';
 import 'package:flash64_native/components/users/registration.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final uid = ref.watch(currentUserProvider);
     final username = ref.watch(userInformationProvider);
     return Scaffold(
       appBar: const GlobalAppBar(),
@@ -101,6 +103,7 @@ class HomePage extends ConsumerWidget {
               child: ElevatedButton(
                 child: const Text('マイページ'),
                 onPressed: () {
+                  ref.read(mentalCalcProvider.notifier).setData(uid);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
