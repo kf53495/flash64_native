@@ -28,10 +28,10 @@ class MyPageMemory64Notifier extends StateNotifier<List> {
     final refData = await FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
-        .collection('mental_calc')
-        .doc('3')
+        .collection('memory64')
+        .doc('empty')
         .get();
-    state = [refData.get('challenge'), refData.get('clear')];
+    state = [refData, 2];
   }
 }
 

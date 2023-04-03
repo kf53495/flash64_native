@@ -42,7 +42,10 @@ class MyPage extends ConsumerWidget {
           ),
           Center(
             child: Text('クリア${ref.watch(mentalCalcProvider)[1]}'),
-          )
+          ),
+          Center(
+            child: Text('Memory64: ${ref.watch(memory64Provider)[0]}'),
+          ),
         ],
       ),
     );
